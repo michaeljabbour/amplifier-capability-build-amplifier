@@ -483,6 +483,347 @@ except BundleValidationError as e:
     print(f"Invalid bundle: {e}")
 ```
 
+## Building a Complete CLI Application
+
+This section documents the real implementation of amplifier-cli (~1,500 LOC), demonstrating how to build a full-featured CLI using foundation patterns.
+
+### Architecture Overview
+
+```
+amplifier-cli/                   ~1,500 LOC (85% smaller than app-cli)
+├── amplifier_cli/
+│   ├── app.py                  150 LOC - AmplifierApp class
+│   ├── config.py               100 LOC - Config dataclass
+│   ├── session_manager.py       50 LOC - Session metadata
+│   ├── project.py               50 LOC - Project detection
+│   ├── main.py                 100 LOC - Typer CLI entry
+│   └── commands/               800 LOC - CLI commands
+├── providers/                   Provider bundles
+├── bundles/                     Base bundles
+└── agents/                      Agent bundles
+```
+
+### Core Pattern: AmplifierApp Class
+
+The `AmplifierApp` class encapsulates the foundation workflow:
+
+```python
+class AmplifierApp:
+    """Foundation-based CLI application."""
+
+    def __init__(self, config: Config):
+        self.config = config
+        self.session: Optional[Session] = None
+        self.prepared: Optional[PreparedBundle] = None
+
+    async def initialize(self) -> None:
+        """Initialize: load → compose → prepare → session."""
+        bundles = []
+
+        # 1. Load foundation
+        foundation = await load_bundle(
+            "git+https://github.com/microsoft/amplifier-foundation@main"
+        )
+        bundles.append(foundation)
+
+        # 2. Load provider
+        provider = await load_bundle(self.config.provider)
+        bundles.append(provider)
+
+        # 3. Load config files (configs ARE bundles!)
+        global_config = Path.home() / ".amplifier" / "config.yaml"
+        if global_config.exists():
+            bundles.append(await load_bundle(str(global_config)))
+
+        # 4. Load project config
+        if self.config.project_root:
+            project_config = find_project_config(self.config.project_root)
+            if project_config:
+                bundles.append(await load_bundle(str(project_config)))
+
+        # 5. Compose all (later wins)
+        composed = bundles[0]
+        for bundle in bundles[1:]:
+            composed = composed.compose(bundle)
+
+        # 6. Prepare and create session
+        self.prepared = await composed.prepare()
+        self.session = await self.prepared.create_session()
+
+    async def execute(self, prompt: str) -> str:
+        """Execute prompt against session."""
+        return await self.session.execute(prompt)
+
+    async def spawn_agent(self, agent_path: str, instruction: str) -> dict:
+        """Spawn agent sub-session."""
+        agent_bundle = await load_bundle(agent_path)
+        return await self.prepared.spawn(
+            child_bundle=agent_bundle,
+            instruction=instruction,
+            compose=True,
+            parent_session=self.session,
+        )
+```
+
+**Key Insights:**
+- Direct foundation API usage (no wrappers)
+- Config files ARE bundles (reuse mechanism)
+- Composition handles all merging
+- Foundation manages session state
+- App layer just orchestrates composition order
+
+### Configuration System
+
+Simple dataclass with environment variable support:
+
+```python
+@dataclass
+class Config:
+    """Application configuration."""
+
+    provider: str = field(
+        default_factory=lambda: os.getenv(
+            "AMPLIFIER_PROVIDER",
+            "./providers/anthropic.yaml"
+        )
+    )
+    bundle: Optional[str] = field(
+        default_factory=lambda: os.getenv("AMPLIFIER_BUNDLE")
+    )
+    bundles: list[str] = field(default_factory=list)
+    project_root: Optional[Path] = None
+
+    @classmethod
+    def from_env_and_project(cls) -> "Config":
+        """Load from env + project detection."""
+        config = cls()
+        manager = ProjectManager()
+        config.project_root = manager.get_project_root()
+        return config
+```
+
+**No custom config merging needed** - bundle composition handles it!
+
+### Project Detection
+
+Lightweight project management (~50 lines vs app-cli's complex multi-project system):
+
+```python
+class ProjectManager:
+    def get_project_root(self) -> Path:
+        """Find project root (.git or .amplifier directory)."""
+        cwd = Path.cwd()
+        for parent in [cwd, *cwd.parents]:
+            if (parent / ".git").exists() or (parent / ".amplifier").exists():
+                return parent
+            if parent == Path.home():
+                return cwd
+        return cwd
+
+    def get_project_id(self, project_root: Path) -> str:
+        """Generate stable project ID from path."""
+        return hashlib.md5(str(project_root.resolve()).encode()).hexdigest()[:8]
+
+    def get_project_storage(self, project_root: Path) -> Path:
+        """Get project-specific storage directory."""
+        project_id = self.get_project_id(project_root)
+        storage = Path.home() / ".amplifier" / "projects" / project_id
+        storage.mkdir(parents=True, exist_ok=True)
+        return storage
+```
+
+### Session Metadata (Not State!)
+
+**Critical distinction:** We store metadata ONLY (for user reference), not session state.
+
+```python
+class SessionManager:
+    """Lightweight session metadata storage."""
+
+    def save_session_metadata(self, session_id: str, metadata: dict):
+        """Save session metadata."""
+        path = self.storage / f"{session_id}.json"
+        metadata.update({
+            "session_id": session_id,
+            "created_at": datetime.now().isoformat(),
+        })
+        path.write_text(json.dumps(metadata, indent=2))
+
+    def list_sessions(self) -> list[dict]:
+        """List all sessions."""
+        sessions = []
+        for path in self.storage.glob("*.json"):
+            sessions.append(json.loads(path.read_text()))
+        return sorted(sessions, key=lambda s: s["created_at"], reverse=True)
+```
+
+**50 lines vs app-cli's SessionStore: 479 lines** (90% reduction)
+
+Why so much smaller?
+- Foundation handles session state during lifetime
+- We only store metadata for user to remember context
+- No atomic operations, backup files, corruption recovery
+- "Resumption" = showing user past context, not restoring state
+
+### CLI Commands with Typer
+
+Modern CLI framework with auto-completion and rich output:
+
+```python
+import typer
+from rich.console import Console
+
+app = typer.Typer()
+console = Console()
+
+@app.command()
+def run_prompt(
+    prompt: str = typer.Argument(...),
+    provider: Optional[str] = typer.Option(None, "--provider", "-p"),
+    bundle: Optional[list[str]] = typer.Option(None, "--bundle", "-b"),
+):
+    """Execute a single prompt."""
+    asyncio.run(_execute_prompt(prompt, provider, bundle))
+
+async def _execute_prompt(prompt: str, provider: Optional[str], bundles: Optional[list[str]]):
+    config = Config.from_env_and_project()
+    if provider:
+        config.provider = provider
+    if bundles:
+        config.bundles = list(bundles)
+
+    async with AmplifierApp(config) as app:
+        response = await app.execute(prompt)
+        console.print(Markdown(response))
+```
+
+### REPL Mode
+
+Interactive mode using prompt_toolkit:
+
+```python
+async def repl_mode():
+    """Interactive REPL mode."""
+    config = Config.from_env_and_project()
+    config.validate()
+
+    async with AmplifierApp(config) as app:
+        history_file = Path.home() / ".amplifier" / "repl_history"
+        prompt_session = PromptSession(
+            history=FileHistory(str(history_file)),
+            multiline=True,
+        )
+
+        while True:
+            try:
+                user_input = await prompt_session.prompt_async(">>> ")
+                if user_input.lower() in ("exit", "quit"):
+                    break
+
+                response = await app.execute(user_input)
+                console.print(Markdown(response))
+
+            except KeyboardInterrupt:
+                continue
+            except EOFError:
+                break
+```
+
+Foundation maintains context across all REPL inputs automatically!
+
+### Agent Commands
+
+Direct spawn() usage (no wrapper needed):
+
+```python
+@app.command(name="run")
+def run_agent(
+    agent: str = typer.Argument(...),
+    instruction: str = typer.Argument(...),
+    resume: Optional[str] = typer.Option(None, "--resume"),
+):
+    """Spawn an agent."""
+    asyncio.run(_spawn_agent(agent, instruction, resume))
+
+async def _spawn_agent(agent: str, instruction: str, resume_id: Optional[str]):
+    config = Config.from_env_and_project()
+    async with AmplifierApp(config) as app:
+        agent_path = _resolve_agent_path(agent)
+        result = await app.spawn_agent(
+            agent_path,
+            instruction,
+            session_id=resume_id  # None = new, or ID to resume
+        )
+        console.print(Markdown(result["output"]))
+```
+
+Foundation handles agent resumption natively!
+
+### Bundle Commands
+
+Inspect bundles using foundation's Bundle object:
+
+```python
+@app.command()
+def inspect(bundle_path: str):
+    """Inspect bundle contents."""
+    asyncio.run(_inspect_bundle(bundle_path))
+
+async def _inspect_bundle(bundle_path: str):
+    bundle = await load_bundle(bundle_path)
+
+    console.print(f"{bundle.name} v{bundle.version}")
+    if bundle.providers:
+        console.print("\nProviders:")
+        for p in bundle.providers:
+            console.print(f"  • {p['module']}")
+
+    if bundle.tools:
+        console.print("\nTools:")
+        for t in bundle.tools:
+            console.print(f"  • {t['module']}")
+```
+
+Bundle object is self-documenting - no custom introspection needed!
+
+### Code Reduction Breakdown
+
+| Component | app-cli | amplifier-cli | Reduction |
+|-----------|---------|---------------|-----------|
+| Session management | 834 lines | 50 lines | 94% |
+| Bundle loading | 700+ lines | 0 (foundation) | 100% |
+| Mention loading | 466 lines | 0 (foundation) | 100% |
+| Config system | 704 lines | 100 lines | 86% |
+| Commands | 6,120 lines | 800 lines | 87% |
+| **Total** | **~10,000** | **~1,500** | **85%** |
+
+### Key Takeaways
+
+**Do:**
+- Use foundation APIs directly
+- Let config files BE bundles
+- Store only session metadata, not state
+- Use bundle composition for all merging
+- Leverage foundation features (mentions, caching, hooks)
+
+**Don't:**
+- Wrap foundation APIs (spawner, session store)
+- Create custom config merging
+- Try to persist session state
+- Reimplement foundation features
+- Copy app-cli internals
+
+**Pattern Summary:**
+```
+Your CLI → AmplifierApp → foundation workflow
+            ↓
+         load → compose → prepare → session → execute
+            ↑
+      All heavy lifting done by foundation
+```
+
+The app layer is truly thin (~1,500 LOC) - just CLI commands, config search, and metadata tracking.
+
 ## File Reference
 
 See [references/ARCHITECTURE.md](references/ARCHITECTURE.md) for foundation architecture.
