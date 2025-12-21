@@ -23,7 +23,7 @@ from amplifier_foundation import load_bundle
 async def main():
     # 1. Load bundles
     foundation = await load_bundle("git+https://github.com/microsoft/amplifier-foundation@main")
-    provider = await load_bundle("./providers/anthropic.yaml")
+    provider = await load_bundle("./assets/providers/anthropic.yaml")
 
     # 2. Compose bundles (later overrides earlier)
     composed = foundation.compose(provider)
@@ -66,6 +66,8 @@ assets/
 ```
 
 Code examples in this document reference these files. Examine them to see real bundle structures.
+
+**Repo note:** These examples live under `assets/`. In a real CLI app, you’ll typically organize them as `providers/`, `bundles/`, and `agents/` at your project root.
 
 ## What is a Bundle?
 
@@ -138,9 +140,11 @@ result = base.compose(overlay)  # overlay wins on conflicts
 
 **Base + Environment:**
 ```python
-base = await load_bundle("./bundles/base.md")
-dev_overlay = await load_bundle("./bundles/dev.md")
-prod_overlay = await load_bundle("./bundles/prod.md")
+import os
+
+base = await load_bundle("./assets/bundles/base.md")
+dev_overlay = await load_bundle("./assets/bundles/dev.md")
+prod_overlay = await load_bundle("./assets/bundles/prod.md")
 
 env = os.getenv("ENV", "dev")
 overlay = dev_overlay if env == "dev" else prod_overlay
@@ -315,12 +319,13 @@ async with await prepared.create_session(session_id=session_id) as session:
 
 ### Defining Agents
 
-In `agents/bug-hunter.md`:
+In `assets/agents/bug-hunter.md`:
 
 ```markdown
 ---
-agent:
+bundle:
   name: bug-hunter
+  version: 1.0.0
   description: Finds and fixes bugs
 
 providers:
@@ -337,7 +342,7 @@ You are an expert bug hunter. Find bugs systematically.
 
 ```python
 # Load agent as bundle
-agent_bundle = await load_bundle("./agents/bug-hunter.md")
+agent_bundle = await load_bundle("./assets/agents/bug-hunter.md")
 
 # Spawn sub-session
 result = await prepared.spawn(
@@ -452,11 +457,10 @@ test_bundle = Bundle(
 ### Validation
 
 ```python
-from amplifier_foundation import load_bundle, validate_bundle_or_raise
+from amplifier_foundation import load_bundle
 
 bundle = await load_bundle(path)
-validate_bundle_or_raise(bundle)  # Raises if invalid
-prepared = await bundle.prepare()
+prepared = await bundle.prepare()  # Activates modules (may download/install)
 ```
 
 ## Error Handling

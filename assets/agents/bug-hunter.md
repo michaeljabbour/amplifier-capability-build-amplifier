@@ -1,6 +1,7 @@
 ---
-agent:
+bundle:
   name: bug-hunter
+  version: 1.0.0
   description: >
     Specialized debugging expert focused on finding and fixing bugs systematically.
     Use when: encountering errors, test failures, unexpected behavior, or needing

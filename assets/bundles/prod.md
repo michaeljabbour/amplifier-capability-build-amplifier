@@ -6,6 +6,7 @@ bundle:
 
 includes:
   - ./base.md
+  - ./assets/bundles/base.md
 
 providers:
   - module: provider-anthropic
