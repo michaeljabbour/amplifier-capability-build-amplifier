@@ -56,13 +56,13 @@ This skill includes working examples in the `assets/` directory:
 ```
 assets/
 ├── providers/
-│   └── anthropic.yaml      # Provider bundle example
+│   ├── opus.yaml           # Claude Opus 4.5 provider
+│   ├── sonnet.yaml         # Claude Sonnet 4.5 provider
+│   └── haiku.yaml          # Claude Haiku 4 provider
 ├── bundles/
-│   ├── base.md             # Base bundle with session and tools
-│   ├── dev.md              # Development overlay (includes base)
-│   └── prod.md             # Production overlay (includes base)
+│   └── base.md             # Base bundle with tools and hooks
 └── agents/
-    └── bug-hunter.md       # Agent bundle example
+    └── bug-hunter.md       # Example agent bundle
 ```
 
 Code examples in this document reference these files. Examine them to see real bundle structures.
@@ -485,19 +485,19 @@ except BundleValidationError as e:
 
 ## Building a Complete CLI Application
 
-This section documents the real implementation of amplifier-cli (~1,500 LOC), demonstrating how to build a full-featured CLI using foundation patterns.
+This section demonstrates how to build a full-featured CLI using foundation patterns. Following these patterns results in significantly less code (~85% reduction) compared to implementing session management, bundle loading, and configuration merging yourself.
 
-### Architecture Overview
+### Example Architecture
 
 ```
-amplifier-cli/                   ~1,500 LOC (85% smaller than app-cli)
-├── amplifier_cli/
-│   ├── app.py                  150 LOC - AmplifierApp class
-│   ├── config.py               100 LOC - Config dataclass
-│   ├── session_manager.py       50 LOC - Session metadata
-│   ├── project.py               50 LOC - Project detection
-│   ├── main.py                 100 LOC - Typer CLI entry
-│   └── commands/               800 LOC - CLI commands
+your-cli/
+├── your_cli/
+│   ├── app.py                  Core app class encapsulating foundation workflow
+│   ├── config.py               Configuration dataclass
+│   ├── session_manager.py      Session metadata storage (not state!)
+│   ├── project.py              Project detection logic
+│   ├── main.py                 CLI entry point (Typer/Click/argparse)
+│   └── commands/               Command implementations
 ├── providers/                   Provider bundles
 ├── bundles/                     Base bundles
 └── agents/                      Agent bundles
@@ -788,14 +788,14 @@ Bundle object is self-documenting - no custom introspection needed!
 
 ### Code Reduction Breakdown
 
-| Component | app-cli | amplifier-cli | Reduction |
-|-----------|---------|---------------|-----------|
-| Session management | 834 lines | 50 lines | 94% |
-| Bundle loading | 700+ lines | 0 (foundation) | 100% |
-| Mention loading | 466 lines | 0 (foundation) | 100% |
-| Config system | 704 lines | 100 lines | 86% |
-| Commands | 6,120 lines | 800 lines | 87% |
-| **Total** | **~10,000** | **~1,500** | **85%** |
+| Component | Without Foundation | With Foundation | Reduction |
+|-----------|-------------------|-----------------|-----------|
+| Session management | ~800+ lines | ~50 lines (metadata only) | ~94% |
+| Bundle loading | ~700+ lines | 0 (foundation) | 100% |
+| Mention loading | ~450+ lines | 0 (foundation) | 100% |
+| Config system | ~700+ lines | ~100 lines (simple dataclass) | ~86% |
+| Commands | ~6,000+ lines | ~800 lines | ~87% |
+| **Total** | **~10,000+** | **~1,500** | **~85%** |
 
 ### Key Takeaways
 
@@ -822,7 +822,7 @@ Your CLI → AmplifierApp → foundation workflow
       All heavy lifting done by foundation
 ```
 
-The app layer is truly thin (~1,500 LOC) - just CLI commands, config search, and metadata tracking.
+The app layer is truly thin (typically ~1,500 LOC) - just CLI commands, config search, and metadata tracking.
 
 ## File Reference
 
