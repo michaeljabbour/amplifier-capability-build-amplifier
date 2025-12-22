@@ -21,9 +21,12 @@ Detailed reference documentation for amplifier-cli-skill.
 ## Project Resources
 
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - Repository structure and contribution guidelines
-- **[SESSION_LEARNINGS.md](SESSION_LEARNINGS.md)** - Production bug fixes, race conditions, and learnings
-- **[CHANGELOG.md](CHANGELOG.md)** - Project development history
-- **[DOCUMENTATION_AUDIT_PROMPT.md](DOCUMENTATION_AUDIT_PROMPT.md)** - Documentation quality checklist
+- **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Production patterns, bug fixes, and troubleshooting guide
+- **[REFERENCE_IMPLEMENTATION_HISTORY.md](REFERENCE_IMPLEMENTATION_HISTORY.md)** - Evolution of amplifier-simplecli reference implementation
+
+## Maintainer Tools
+
+- **[.github/AUDIT_PROMPT.md](../.github/AUDIT_PROMPT.md)** - Documentation quality audit checklist (for maintainers)
 
 ## Usage
 

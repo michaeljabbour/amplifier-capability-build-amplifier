@@ -1,7 +1,8 @@
-# Session Learnings: Foundation Alignment & Production Readiness
+# Troubleshooting Guide: Production Patterns & Bug Fixes
 
-**Date:** 2025-12-21
-**Session Focus:** Fixing write_file bug, achieving 100% foundation alignment, production safety
+**Purpose:** Documents production patterns, common issues, race conditions, and bug fixes discovered while building Amplifier CLI applications.
+
+**Last Updated:** 2025-12-21
 
 ---
 

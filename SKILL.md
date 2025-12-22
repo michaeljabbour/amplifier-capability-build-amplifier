@@ -491,8 +491,8 @@ For detailed information on specific topics, see the `references/` directory:
 
 ### Project Resources
 - **[CONTRIBUTING.md](references/CONTRIBUTING.md)** - Repository structure and contribution guidelines
-- **[SESSION_LEARNINGS.md](references/SESSION_LEARNINGS.md)** - Production bug fixes and learnings
-- **[CHANGELOG.md](references/CHANGELOG.md)** - Project development history
+- **[TROUBLESHOOTING.md](references/TROUBLESHOOTING.md)** - Production patterns, bug fixes, and troubleshooting guide
+- **[REFERENCE_IMPLEMENTATION_HISTORY.md](references/REFERENCE_IMPLEMENTATION_HISTORY.md)** - Evolution of amplifier-simplecli reference implementation
 
 These references provide comprehensive coverage beyond the quick start patterns in this document. Start here for overview, explore references for depth.
 

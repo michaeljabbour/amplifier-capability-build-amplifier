@@ -1,5 +1,7 @@
 # Documentation Audit Prompt
 
+> **For Maintainers:** This is an internal tool for auditing the skill's documentation quality and foundation alignment.
+
 **Purpose:** Use this prompt with an adversarial AI to validate:
 1. Documentation accuracy
 2. Agent Skill readiness

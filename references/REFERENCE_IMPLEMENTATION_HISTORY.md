@@ -1,6 +1,12 @@
-# Changelog - Simple Amplifier CLI
+# Reference Implementation Development History
 
-## Recent Updates (Last 4-6 Prompts)
+**About:** This documents the evolution of [amplifier-simplecli](https://github.com/michaeljabbour/amplifier-simplecli), the production reference implementation demonstrating Amplifier patterns in practice.
+
+**Purpose:** Captures key architectural decisions, feature additions, and patterns discovered while building a real-world Amplifier CLI application.
+
+---
+
+## Recent Updates
 
 ### Memory System Complete (Latest)
 
