@@ -19,6 +19,21 @@ metadata:
 
 This skill teaches how to build CLI applications using **amplifier-foundation** patterns - the source of truth for Amplifier application development.
 
+## Amplifier Ecosystem
+
+This skill is part of the broader Amplifier ecosystem:
+
+### Core Repositories
+
+- **[amplifier](https://github.com/microsoft/amplifier)** - Main framework repository
+- **[amplifier-core](https://github.com/microsoft/amplifier-core)** - Core library (execution engine)
+- **[amplifier-foundation](https://github.com/microsoft/amplifier-foundation)** - Foundation library (configuration/composition layer)
+- **[Amplifier Modules](https://github.com/microsoft/amplifier/blob/main/docs/MODULES.md)** - Module catalog (36+ available modules)
+
+### Reference Implementations
+
+- **[amplifier-simplecli](https://github.com/michaeljabbour/amplifier-simplecli)** - Production terminal UI implementation
+
 ## Reference Implementation
 
 **See [amplifier-simplecli](https://github.com/michaeljabbour/amplifier-simplecli)** for a complete working example demonstrating these patterns in production. This terminal UI implementation showcases:
