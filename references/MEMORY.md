@@ -80,7 +80,7 @@ Injects relevant memories at session start using progressive disclosure.
 
 ## Quick Setup
 
-Add to your `assets/bundles/base.md`:
+Add to your bundle configuration (e.g., `bundles/base.md`):
 
 ```yaml
 session:

@@ -11,6 +11,7 @@ Detailed reference documentation for amplifier-cli-skill.
 ## Building Applications
 
 - **[BUILD_PATTERNS.md](BUILD_PATTERNS.md)** - Comprehensive CLI build patterns, implementation details, and best practices
+- **[EXAMPLES.md](EXAMPLES.md)** - Complete bundle examples (base, providers, agents) ready to copy and adapt
 
 ## Extensions & Customization
 

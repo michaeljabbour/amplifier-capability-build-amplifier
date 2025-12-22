@@ -50,7 +50,7 @@ hooks:
 
 **Usage Example:**
 
-See [assets/bundles/base.md](../assets/bundles/base.md) for a complete working example.
+See [EXAMPLES.md](EXAMPLES.md) for complete working examples with hooks configuration.
 
 ```yaml
 ---
@@ -343,5 +343,5 @@ The official `hooks-streaming-ui` module is:
 
 - [SKILL.md](../SKILL.md) - Full CLI application patterns
 - [ARCHITECTURE.md](ARCHITECTURE.md) - Foundation architecture reference
-- [MEMORY_GUIDE.md](../MEMORY_GUIDE.md) - Memory system integration
-- [assets/bundles/base.md](../assets/bundles/base.md) - Working bundle example
+- [MEMORY.md](MEMORY.md) - Memory system integration
+- [EXAMPLES.md](EXAMPLES.md) - Complete bundle examples

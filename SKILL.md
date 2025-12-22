@@ -60,7 +60,7 @@ from amplifier_foundation import load_bundle
 async def main():
     # 1. Load bundles
     foundation = await load_bundle("git+https://github.com/microsoft/amplifier-foundation@main")
-    provider = await load_bundle("./assets/providers/anthropic.yaml")
+    provider = await load_bundle("./providers/anthropic.yaml")  # Your provider config
 
     # 2. Compose bundles (later overrides earlier)
     composed = foundation.compose(provider)
@@ -86,25 +86,21 @@ pip install amplifier-foundation
 uv add amplifier-foundation
 ```
 
-## Example Files
+## Example Bundles
 
-This skill includes working examples in the `assets/` directory:
+Complete, production-ready bundle examples are available in [references/EXAMPLES.md](references/EXAMPLES.md):
 
+- **Base Bundle** - Session orchestrator, memory system, hooks, and tools
+- **Provider Configurations** - Claude Opus 4.5, Sonnet 4.5, Haiku 4
+- **Agent Bundle** - Specialized bug-hunter agent example
+
+These examples show real bundle structures you can copy and adapt. In your CLI app, organize them as:
 ```
-assets/
-├── providers/
-│   ├── opus.yaml           # Claude Opus 4.5 provider
-│   ├── sonnet.yaml         # Claude Sonnet 4.5 provider
-│   └── haiku.yaml          # Claude Haiku 4 provider
-├── bundles/
-│   └── base.md             # Base bundle with tools and hooks
-└── agents/
-    └── bug-hunter.md       # Example agent bundle
+your-cli/
+├── bundles/base.md
+├── providers/opus.yaml
+└── agents/bug-hunter.md
 ```
-
-Code examples in this document reference these files. Examine them to see real bundle structures.
-
-**Repo note:** These examples live under `assets/`. In a real CLI app, you’ll typically organize them as `providers/`, `bundles/`, and `agents/` at your project root.
 
 ## What is a Bundle?
 
@@ -179,9 +175,9 @@ result = base.compose(overlay)  # overlay wins on conflicts
 ```python
 import os
 
-base = await load_bundle("./assets/bundles/base.md")
-dev_overlay = await load_bundle("./assets/bundles/dev.md")
-prod_overlay = await load_bundle("./assets/bundles/prod.md")
+base = await load_bundle("./bundles/base.md")
+dev_overlay = await load_bundle("./bundles/dev.md")
+prod_overlay = await load_bundle("./bundles/prod.md")
 
 env = os.getenv("ENV", "dev")
 overlay = dev_overlay if env == "dev" else prod_overlay
@@ -356,7 +352,7 @@ async with await prepared.create_session(session_id=session_id) as session:
 
 ### Defining Agents
 
-In `assets/agents/bug-hunter.md`:
+Example agent bundle structure (see [references/EXAMPLES.md](references/EXAMPLES.md) for complete example):
 
 ```markdown
 ---
@@ -379,7 +375,7 @@ You are an expert bug hunter. Find bugs systematically.
 
 ```python
 # Load agent as bundle
-agent_bundle = await load_bundle("./assets/agents/bug-hunter.md")
+agent_bundle = await load_bundle("./agents/bug-hunter.md")
 
 # Spawn sub-session
 result = await prepared.spawn(
@@ -515,7 +511,7 @@ When building your own CLI, start from the foundation patterns above, not from c
 
 ## Production Configuration Choices
 
-When building production CLIs, leverage **amplifier-foundation's native capabilities**. The example bundles in `assets/` demonstrate production-ready choices.
+When building production CLIs, leverage **amplifier-foundation's native capabilities**. The example bundles in [references/EXAMPLES.md](references/EXAMPLES.md) demonstrate production-ready choices.
 
 ### Orchestrator: loop-streaming
 

@@ -7,11 +7,13 @@ This is an **Agent Skill** that teaches how to build CLI applications using ampl
 ## Repository Structure
 
 - `SKILL.md` - Primary skill definition (YAML frontmatter + Markdown body)
-- `assets/` - Working example bundles referenced by SKILL.md
-  - `assets/providers/*.yaml` - Provider bundle examples (pure YAML)
-  - `assets/bundles/*.md` - Bundle examples (Markdown with YAML frontmatter)
-  - `assets/agents/*.md` - Agent bundle examples
-- `references/` - Architecture docs, audit prompts, and deeper technical documentation
+- `references/` - All documentation and examples
+  - `references/EXAMPLES.md` - Complete bundle examples (base, providers, agents)
+  - `references/ARCHITECTURE*.md` - Architecture documentation
+  - `references/BUILD_PATTERNS.md` - CLI build patterns
+  - `references/HOOKS.md` - Hooks system documentation
+  - `references/MEMORY.md` - Memory system guide
+  - `references/CONTRIBUTING.md` - This file
 - `scripts/` - Automation helpers (currently empty)
 
 ## Key Concept: Source of Truth
@@ -28,32 +30,33 @@ App-cli patterns should be labeled "reference only" - they are policy decisions,
 ## Validation Commands
 
 ```bash
-# Verify assets are referenced correctly
-rg "assets/" SKILL.md
+# Verify references are correct
+rg "references/" SKILL.md
 
-# Runtime validation (requires Python 3.10+, uv, network)
-uv venv && uv pip install amplifier-foundation
-uv run python -c "import asyncio; from amplifier_foundation import load_bundle; asyncio.run(load_bundle('./assets/bundles/base.md'))"
+# Validate SKILL.md structure
+grep -A 5 "^---$" SKILL.md | head -20  # Check YAML frontmatter
+
+# Test that examples in references/EXAMPLES.md are syntactically correct
+# (Copy example to temporary file and load it)
 ```
 
 ## Coding Style & Naming Conventions
 
 - **Markdown**: Use descriptive headings, fenced code blocks with language tags (e.g., ```python), and keep examples executable.
 - **YAML/frontmatter**: 2-space indentation; keep frontmatter wrapped with `---` and include a trailing newline.
-- **Naming**: Prefer kebab-case filenames (e.g., `assets/bundles/dev.md`, `assets/providers/anthropic.yaml`).
+- **Naming**: Prefer kebab-case filenames (e.g., `bundles/dev.md`, `providers/anthropic.yaml`).
 
 ## Build, Test, and Development Commands
 
 This repository is documentation + configuration examples; there is no build step.
 
-- **Search/verify references**: `rg "assets/" SKILL.md`
-- **Optional runtime validation** (Python 3.10+, `uv`, network access for deps):
-  - `uv venv && uv pip install amplifier-foundation`
-  - `uv run python -c "import asyncio; from amplifier_foundation import load_bundle; asyncio.run(load_bundle('./assets/bundles/base.md'))"`
+- **Search/verify references**: `rg "references/" SKILL.md`
+- **Check YAML frontmatter**: `grep -A 5 "^---$" SKILL.md | head -20`
+- **Verify EXAMPLES.md**: Ensure all bundle examples are complete and syntactically correct
 
 ## When Editing
 
-- Keep SKILL.md and assets/ in sync - if you add/change an example, update the corresponding asset file
+- Keep SKILL.md and references/EXAMPLES.md in sync - if you add/change an example, update EXAMPLES.md accordingly
 - Bundle files use YAML frontmatter with `---` delimiters
 - Provider files (`.yaml`) are pure YAML
 - Agent/bundle files (`.md`) are Markdown with YAML frontmatter
@@ -62,13 +65,13 @@ This repository is documentation + configuration examples; there is no build ste
 ## Testing Guidelines
 
 - No automated test suite in this repo. Treat "tests" as validation:
-  - Assets load without errors (see runtime validation above).
-  - Links and paths in `SKILL.md` resolve (especially under `assets/` and `references/`).
+  - Examples in `references/EXAMPLES.md` are syntactically correct.
+  - Links and paths in `SKILL.md` resolve (especially under `references/`).
 
 ## Commit & Pull Request Guidelines
 
 - This checkout may not include git history; default to Conventional Commits (`docs:`, `feat:`, `fix:`, `chore:`).
-- **PRs**: Describe intent + affected files, keep changes scoped, and update `SKILL.md` and `assets/` together when examples change.
+- **PRs**: Describe intent + affected files, keep changes scoped, and update `SKILL.md` and `references/EXAMPLES.md` together when examples change.
 
 ## Security & Configuration Tips
 

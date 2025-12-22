@@ -23,15 +23,14 @@ your-cli/
 ├── requirements.txt         # Python dependencies
 ├── README.md               # User documentation
 ├── .gitignore              # Git ignores
-└── assets/
-    ├── bundles/
-    │   ├── base.md         # Base bundle configuration
-    │   ├── dev.md          # Development overlay (optional)
-    │   └── prod.md         # Production overlay (optional)
-    ├── providers/
-    │   └── anthropic.yaml  # Provider configuration
-    └── agents/
-        └── (custom agents) # Custom agent bundles (optional)
+├── bundles/
+│   ├── base.md         # Base bundle configuration
+│   ├── dev.md          # Development overlay (optional)
+│   └── prod.md         # Production overlay (optional)
+├── providers/
+│   └── anthropic.yaml  # Provider configuration
+└── agents/
+    └── (custom agents) # Custom agent bundles (optional)
 ```
 
 ### 2. Core Dependencies
@@ -45,7 +44,7 @@ rich>=13.0.0
 ### 3. Base Bundle Template
 
 ```yaml
-# assets/bundles/base.md
+# bundles/base.md
 ---
 bundle:
   name: base
@@ -88,7 +87,7 @@ You are running in an **Amplifier CLI session** built with amplifier-foundation.
 ### 4. Provider Configuration Template
 
 ```yaml
-# assets/providers/anthropic.yaml
+# providers/anthropic.yaml
 bundle:
   name: provider-anthropic
   version: 1.0.0
@@ -168,12 +167,14 @@ def main():
 #### Bundle Composition Workflow
 ```python
 # Always follow this pattern:
-base = await load_bundle("./assets/bundles/base.md")
-provider = await load_bundle("./assets/providers/anthropic.yaml")
+base = await load_bundle("./bundles/base.md")
+provider = await load_bundle("./providers/anthropic.yaml")
 composed = base.compose(provider)
 prepared = await composed.prepare()
 session = await prepared.create_session()
 ```
+
+See [EXAMPLES.md](EXAMPLES.md) for complete example bundles.
 
 #### Dynamic Provider Configuration
 ```python
@@ -318,7 +319,7 @@ See `simple_cli.py` in this repository for a complete, working implementation th
 
 ### Add Custom Tools
 ```yaml
-# In assets/bundles/base.md, add to tools section:
+# In bundles/base.md, add to tools section:
 tools:
   - module: tool-web
     source: git+https://github.com/microsoft/amplifier-module-tool-web@main
@@ -326,7 +327,7 @@ tools:
 
 ### Add Custom Agents
 ```markdown
-# Create assets/agents/my-agent.md
+# Create agents/my-agent.md
 ---
 bundle:
   name: my-agent
