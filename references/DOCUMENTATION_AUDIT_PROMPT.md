@@ -30,7 +30,7 @@ Before you audit claims, capture enough environment context so another auditor c
 
 1. **Identify the target**
    - Target repo absolute path and **git commit SHA** (or explain if not a git repo)
-   - List the documents you will audit (e.g., `README.md`, `docs/`, `references/`, `SKILL.md`, `AGENTS.md`, `CLAUDE.md`)
+   - List the documents you will audit (e.g., `SKILL.md`, `references/CONTRIBUTING.md`, `references/BUILD_PATTERNS.md`, `references/MEMORY.md`, `references/`)
 
 2. **Record execution constraints**
    - Can you run shell commands? If not, do a static-only audit and mark runtime checks as “not verifiable”.

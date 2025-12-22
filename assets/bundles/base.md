@@ -20,6 +20,8 @@ hooks:
     source: git+https://github.com/microsoft/amplifier-module-hooks-logging@main
   - module: hooks-redaction
     source: git+https://github.com/microsoft/amplifier-module-hooks-redaction@main
+  # Streaming UI provides real-time display of thinking blocks, tool calls, and token usage.
+  # See references/HOOKS.md for configuration options (show_thinking_stream, show_tool_lines, show_token_usage).
   - module: hooks-streaming-ui
     source: git+https://github.com/microsoft/amplifier-module-hooks-streaming-ui@main
   - module: hooks-todo-reminder

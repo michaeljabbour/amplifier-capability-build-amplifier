@@ -1,6 +1,40 @@
-# Adding Memory to Amplifier CLI Applications
+# Memory System for Amplifier CLI Applications
 
-This guide explains how to add persistent memory to your Amplifier CLI using the memory modules.
+**⚠️ IMPORTANT:** These are **custom extension modules** (community contributions), NOT part of the official amplifier-foundation ecosystem.
+
+This document explains how to add persistent memory to your Amplifier CLI using custom memory modules.
+
+## Status
+
+### Working Modules ✅
+
+**1. tool-memory**
+- **Status**: ✅ Working
+- **Location**: `git+https://github.com/michaeljabbour/amplifier-module-tool-memory@main`
+- **Pattern**: Uses `mount()` function (current standard)
+- **Provides**: 16 memory tools
+  - `add_memory`, `get_memory`, `update_memory`, `delete_memory`
+  - `list_memories`, `search_memories`
+  - `create_session`, `update_session`, `get_session`, `list_sessions`
+  - `get_context_for_session`
+  - `add_file_context`, `get_file_context`
+  - `get_stats`, `compact`, `export_memories`
+
+**2. context-memory**
+- **Status**: ✅ Working
+- **Location**: `git+https://github.com/michaeljabbour/amplifier-module-context-memory@main`
+- **Pattern**: Uses `mount()` function (current standard)
+- **Provides**: Progressive memory context injection
+
+**3. hooks-memory-capture**
+- **Status**: ✅ Fixed and working
+- **Location**: `git+https://github.com/michaeljabbour/amplifier-module-hooks-memory-capture@main`
+- **Pattern**: Now uses `mount()` function (current standard)
+- **Fixed**: Added mount() function in commit 47ddb46
+- **Provides**:
+  - Automatic memory capture from tool outputs
+  - Session summaries on session end
+  - Observation extraction without manual `add_memory` calls
 
 ## What Memory Provides
 
@@ -58,11 +92,11 @@ session:
     source: git+https://github.com/microsoft/amplifier-module-context-simple@main
   memory_context:
     module: context-memory
-    source: git+https://github.com/michaeljabbour/amplifier-module-context-memory@v0.1.0
+    source: git+https://github.com/michaeljabbour/amplifier-module-context-memory@main
 
 hooks:
   - module: hooks-memory-capture
-    source: git+https://github.com/michaeljabbour/amplifier-module-hooks-memory-capture@v0.1.0
+    source: git+https://github.com/michaeljabbour/amplifier-module-hooks-memory-capture@main
     config:
       min_content_length: 50
       auto_summarize_interval: 10
@@ -70,7 +104,7 @@ hooks:
 
 tools:
   - module: tool-memory
-    source: git+https://github.com/michaeljabbour/amplifier-module-tool-memory@v0.1.0
+    source: git+https://github.com/michaeljabbour/amplifier-module-tool-memory@main
     config:
       storage_path: ~/.amplifier/memories.db
       max_memories: 1000
@@ -193,3 +227,37 @@ python simple_cli.py
 
 # In session:
 You: What did we work on last time?
+Assistant: [Retrieves memory context and summarizes previous session]
+
+You: Add a memory that we fixed the authentication bug
+Assistant: [Uses add_memory tool to store observation]
+```
+
+## Impact
+
+**With full memory system (all 3 modules)**:
+- ✅ Memory storage and retrieval works
+- ✅ Memory context injection works
+- ✅ Manual memory creation via `add_memory` works
+- ✅ Automatic observation capture works
+- ✅ Session summaries automatically created
+
+## Module Count
+
+**Total: 14 modules** (up from 13)
+- Session: loop-streaming, context-simple, context-memory (3)
+- Hooks: logging, redaction, streaming-ui, todo-reminder, memory-capture (5)
+- Tools: filesystem, bash, web, search, todo, memory (6)
+
+## What Changed
+
+**hooks-memory-capture (commit 47ddb46)**:
+- Added `mount()` function following amplifier-core patterns
+- Hook registers via `coordinator.hooks.register()`
+- Accesses memory store via `coordinator.get_capability("memory.store")`
+- Backwards compatible - kept `create_hook()` for legacy support
+
+**tool-memory (commit 53854f8)**:
+- Exposes memory store via `coordinator.set_capability("memory.store", store)`
+- Enables hooks-memory-capture to access store
+- Required for auto-capture functionality
