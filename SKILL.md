@@ -4,9 +4,9 @@ description: Skill for building CLI applications on the Amplifier platform. Teac
 compatibility: Requires Python 3.10+, uv package manager. Works with amplifier-foundation, amplifier-core, and related ecosystem packages.
 license: MIT
 metadata:
-  author: Microsoft
+  author: Michael Jabbour
   version: "2.0"
-  repository: https://github.com/microsoft/amplifier-foundation
+  repository: https://github.com/michaeljabbour/amplifier-cli-skill
 ---
 
 # Building CLI Applications on Amplifier
