@@ -18,6 +18,15 @@ This skill teaches:
 /plugin install https://github.com/michaeljabbour/amplifier-cli-skill
 ```
 
+**OpenAI Codex CLI (local):**
+```bash
+# from the repo root
+CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
+mkdir -p "$CODEX_HOME/skills"
+ln -s "$(pwd)/skills/amplifier-cli-skill" "$CODEX_HOME/skills/amplifier-cli-skill"
+# restart Codex to pick up new skills
+```
+
 **For detailed installation instructions, troubleshooting, and alternative methods, see [INSTALLATION.md](INSTALLATION.md).**
 
 Once installed, Claude Code will automatically use this skill when you:
