@@ -63,8 +63,19 @@ This skill is part of the broader Amplifier ecosystem:
 - **[amplifier-foundation](https://github.com/microsoft/amplifier-foundation)** - Foundation library (configuration/composition layer)
 - **[Amplifier Modules](https://github.com/microsoft/amplifier/blob/main/docs/MODULES.md)** - Module catalog (36+ available modules)
 
+### Related Skills
+- **[amplifier-modulebuilder-skill](https://github.com/michaeljabbour/amplifier-modulebuilder-skill)** - Agent Skill for building amplifier-foundation modules
+  - Learn to create custom tools, hooks, providers, contexts, and orchestrators
+  - "Bricks and studs" architecture patterns
+  - Testing strategies and best practices
+
 ### Reference Implementations
 - **[amplifier-simplecli](https://github.com/michaeljabbour/amplifier-simplecli)** - Production terminal UI implementation
+  - Complete CLI application built with amplifier-foundation
+  - Example of bundle composition and module usage
+  - Memory system and hooks integration
+
+**Learning Path**: Build modules with amplifier-modulebuilder-skill → Compose them into apps with this skill → See them in action in amplifier-simplecli
 
 ## Quick Start Example
 
