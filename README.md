@@ -13,32 +13,18 @@ This skill teaches:
 
 ## Installation
 
-### For Claude Code Users
-
-Install this plugin to make the skill globally available:
-
+**Quick install:**
 ```bash
-# Install from GitHub
 /plugin install https://github.com/michaeljabbour/amplifier-cli-skill
-
-# Or install locally
-claude --plugin-dir /path/to/amplifier-cli-skill
 ```
+
+**For detailed installation instructions, troubleshooting, and alternative methods, see [INSTALLATION.md](INSTALLATION.md).**
 
 Once installed, Claude Code will automatically use this skill when you:
 - Ask about building CLI applications
 - Work with Amplifier bundles or modules
 - Need help with session orchestration
 - Request guidance on production patterns
-
-### For Manual Installation
-
-Copy the skill to your local skills directory:
-
-```bash
-mkdir -p ~/.claude/skills
-cp -r skills/amplifier-cli-skill ~/.claude/skills/
-```
 
 ## Repository Structure
 
