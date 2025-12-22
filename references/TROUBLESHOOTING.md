@@ -261,3 +261,354 @@ Pending Steps:
 2. Verify safety hooks work as expected (approval prompts, backups)
 3. Measure token usage with hooks-streaming-ui
 4. Consider adding cost tracking if needed (custom implementation)
+
+---
+
+## Skills as Passive Documentation (2025-12-21)
+
+### The Discovery
+
+Agent Skills are **teaching materials, not executable applications**. This fundamental insight reshaped the entire repository structure.
+
+### What Changed
+
+**Before (Misunderstanding):**
+```
+amplifier-cli-skill/
+├── assets/
+│   ├── bundles/base.md        # "Runnable" files
+│   ├── providers/*.yaml        # Provider configs
+│   └── agents/bug-hunter.md   # Example agents
+├── README.md
+├── CLAUDE.md
+├── AGENTS.md
+└── SKILL.md                    # Primary documentation
+```
+
+**After (Correct Understanding):**
+```
+amplifier-cli-skill/
+├── SKILL.md                    # ONLY root file (per spec)
+└── references/
+    ├── EXAMPLES.md             # All code examples in one place
+    ├── BUILD_PATTERNS.md       # How to build CLIs
+    └── [other reference docs]
+```
+
+### Key Insights
+
+1. **Skills Don't Execute Files**
+   - SKILL.md code blocks are sufficient for teaching
+   - Users create their own assets when building
+   - No need to maintain "reference" files that aren't run
+   - Validation overhead eliminated
+
+2. **Teaching vs Providing**
+   - **Teaching:** Show patterns in documentation
+   - **Providing:** Give files to copy/run
+   - Skills should teach, not provide
+   - Users learn better by creating than copying
+
+3. **Agent Skills Specification**
+   - SKILL.md is the primary entry point (not README.md)
+   - Optional assets/ directory for truly necessary files
+   - Most skills don't need assets at all
+   - Code examples in markdown are sufficient
+
+4. **Progressive Disclosure**
+   - SKILL.md: High-level teaching (8000+ lines)
+   - references/: Deep dives and specialized topics
+   - Single root file simplifies discovery
+   - Clear information architecture
+
+### Architectural Decisions Made
+
+**Consolidated Documentation:**
+- CLAUDE.md + AGENTS.md → references/CONTRIBUTING.md
+- MEMORY_GUIDE.md + MEMORY_MODULE_STATUS.md → references/MEMORY.md
+- BUILD_GUIDE.md → references/BUILD_PATTERNS.md
+- SESSION_LEARNINGS.md → references/TROUBLESHOOTING.md
+- CHANGELOG.md → references/REFERENCE_IMPLEMENTATION_HISTORY.md
+
+**Removed Redundant Files:**
+- README.md (SKILL.md is entry point)
+- assets/ directory (examples in EXAMPLES.md)
+- references/REFACTORING.md (obsolete)
+
+**Result:**
+- 8 root files → 1 root file (SKILL.md only)
+- Cleaner repository structure
+- Aligned with agentskills.io best practices
+- Focus on teaching patterns over providing files
+
+### When to Use assets/
+
+Assets directory is appropriate when:
+- **Binary files needed:** Images, PDFs, datasets
+- **Complex configuration:** Multi-file setups too large for code blocks
+- **Downloadable templates:** Starter projects users can clone
+
+Assets directory is NOT needed for:
+- Simple code examples (use code blocks)
+- Single-file configurations (inline in SKILL.md)
+- Teaching patterns (describe, don't provide)
+
+### Impact on Validation
+
+**Before:** Had to validate asset files work
+```python
+# Complex validation in CLAUDE.md
+uv run python -c "import asyncio; from amplifier_foundation import load_bundle;
+asyncio.run(load_bundle('./assets/bundles/base.md'))"
+```
+
+**After:** No validation needed
+- Code examples are documentation only
+- Users create their own working implementations
+- Reference implementation (amplifier-simplecli) validates patterns work
+- No maintenance burden for "example" files
+
+---
+
+## Repository Structure Evolution (2025-12-21)
+
+### The Journey to "Stellar"
+
+Goal: Create a professional, maintainable Agent Skills repository that exemplifies best practices.
+
+### Phase 1: Initial Structure (Before)
+
+```
+amplifier-cli-skill/
+├── README.md (redundant with SKILL.md)
+├── AGENTS.md (coding guidelines)
+├── CLAUDE.md (Claude Code instructions)
+├── BUILD_GUIDE.md (build patterns)
+├── MEMORY_GUIDE.md (memory system docs)
+├── MEMORY_MODULE_STATUS.md (module status)
+├── SKILL.md (primary skill)
+├── assets/
+│   ├── bundles/
+│   ├── providers/
+│   └── agents/
+└── references/
+    ├── REFACTORING.md
+    └── [other docs]
+```
+
+**Problems:**
+- 8 root-level files (confusing entry point)
+- Redundant documentation (README vs SKILL.md)
+- Split information (MEMORY_GUIDE + MEMORY_MODULE_STATUS)
+- assets/ directory not serving purpose
+- No clear information architecture
+
+### Phase 2: Agent Skills Alignment
+
+**Commit:** eada7dd "align repository structure with Agent Skills specification"
+
+**Key Changes:**
+1. Removed README.md (SKILL.md is spec-compliant entry point)
+2. Merged related docs (CLAUDE+AGENTS→CONTRIBUTING, MEMORY docs→MEMORY.md)
+3. Moved reference docs to references/
+4. Created new comprehensive guides (HOOKS.md, CUSTOM_EXTENSIONS.md)
+5. Removed obsolete docs (REFACTORING.md)
+
+**Result:** 8 root files → 1 root file
+
+### Phase 3: Assets Removal
+
+**Commit:** a048e3f "remove assets/ directory and consolidate examples"
+
+**Rationale:**
+- Skills are passive documentation, not executable apps
+- Code blocks in SKILL.md sufficient for teaching
+- Users create their own implementations
+- Simpler structure, less maintenance
+
+**Key Changes:**
+1. Created references/EXAMPLES.md with all code examples
+2. Removed assets/bundles/, assets/providers/, assets/agents/
+3. Updated all references in SKILL.md to use generic paths
+4. No more validation overhead
+
+### Phase 4: Final Polish
+
+**Commit:** 241054f "reorganize references directory for clarity"
+
+**Key Changes:**
+1. SESSION_LEARNINGS.md → TROUBLESHOOTING.md (clearer name)
+2. CHANGELOG.md → REFERENCE_IMPLEMENTATION_HISTORY.md (clarifies purpose)
+3. DOCUMENTATION_AUDIT_PROMPT.md → .github/AUDIT_PROMPT.md (meta-document)
+4. Updated cross-references everywhere
+
+### Final Structure (Current)
+
+```
+amplifier-cli-skill/
+├── SKILL.md                              # ONLY root file ✅
+├── .github/
+│   └── AUDIT_PROMPT.md                   # Maintainer tool
+└── references/
+    ├── ARCHITECTURE.md                   # Foundation architecture
+    ├── ARCHITECTURE_FLOWS.md             # Detailed flows
+    ├── BUILD_PATTERNS.md                 # Build guidance
+    ├── CONTRIBUTING.md                   # Repository guidelines
+    ├── CUSTOM_EXTENSIONS.md              # Community modules
+    ├── EXAMPLES.md                       # All code examples
+    ├── HOOKS.md                          # Hooks system
+    ├── MEMORY.md                         # Memory system
+    ├── README.md                         # Directory index
+    ├── REFERENCE_IMPLEMENTATION_HISTORY.md  # simplecli evolution
+    └── TROUBLESHOOTING.md                # This file
+```
+
+### Benefits Achieved
+
+1. **Clear Entry Point**
+   - SKILL.md is the only root file
+   - Follows Agent Skills specification exactly
+   - No confusion about where to start
+
+2. **Progressive Disclosure**
+   - High-level: SKILL.md (teaching patterns)
+   - Deep dives: references/ (specialized topics)
+   - Meta-tools: .github/ (maintainer utilities)
+
+3. **Maintainability**
+   - Single source of truth for each topic
+   - No redundant documentation
+   - Clear cross-references
+   - Easy to find information
+
+4. **Professional Polish**
+   - Clean directory structure
+   - Purpose-focused naming
+   - Consistent documentation style
+   - Comprehensive coverage
+
+5. **Aligned with Specification**
+   - Follows agentskills.io guidelines
+   - SKILL.md as primary interface
+   - Optional references/ for depth
+   - No unnecessary files
+
+### Lessons for Future Skills
+
+1. **Start Simple**
+   - Single SKILL.md file is often sufficient
+   - Add references/ only when needed
+   - Don't create assets/ unless truly necessary
+
+2. **Think Teaching, Not Providing**
+   - Code examples in markdown > separate files
+   - Describe patterns > provide implementations
+   - Users learn by building, not copying
+
+3. **Follow the Spec**
+   - agentskills.io defines best practices
+   - SKILL.md is the entry point
+   - Keep root directory clean
+   - Use progressive disclosure
+
+4. **Consolidate Ruthlessly**
+   - Merge related documentation
+   - Remove redundant files
+   - Single source of truth per topic
+   - Clear naming conventions
+
+---
+
+## Documentation Patterns Discovered (2025-12-21)
+
+### Cross-Reference Architecture
+
+**Pattern:** Every document should reference related documents explicitly.
+
+**Example from SKILL.md:**
+```markdown
+For more details:
+- [ARCHITECTURE.md](./references/ARCHITECTURE.md) - Foundation architecture
+- [HOOKS.md](./references/HOOKS.md) - Complete hooks reference
+- [EXAMPLES.md](./references/EXAMPLES.md) - Full code examples
+```
+
+**Benefits:**
+- Users discover related content naturally
+- Forms knowledge graph, not isolated docs
+- Reduces duplicate information
+- Guides learning journey
+
+### Progressive Depth Pattern
+
+**Pattern:** Start shallow, provide paths to depth.
+
+**Implementation:**
+1. **SKILL.md:** High-level patterns (what & why)
+2. **references/:** Deep dives (how & when)
+3. **EXAMPLES.md:** Complete working code
+4. **TROUBLESHOOTING.md:** Production learnings
+
+**Example Flow:**
+```
+User reads SKILL.md
+  ↓ "Want to understand hooks?"
+  → references/HOOKS.md
+    ↓ "Want code examples?"
+    → references/EXAMPLES.md
+      ↓ "Hit production issues?"
+      → references/TROUBLESHOOTING.md
+```
+
+### Single Source of Truth
+
+**Pattern:** One authoritative document per topic.
+
+**Before (Split):**
+- MEMORY_GUIDE.md: How to use memory
+- MEMORY_MODULE_STATUS.md: Module status
+- SKILL.md: Basic memory info
+- BUILD_GUIDE.md: More memory config
+
+**After (Unified):**
+- references/MEMORY.md: Complete memory documentation
+- SKILL.md: Quick overview with link to MEMORY.md
+
+**Benefits:**
+- No conflicting information
+- Clear update target
+- Easier maintenance
+- User knows where to look
+
+### Meta-Document Separation
+
+**Pattern:** Separate user docs from maintainer tools.
+
+**Implementation:**
+```
+references/              # User-facing documentation
+.github/                 # Maintainer tools
+  └── AUDIT_PROMPT.md   # Documentation validation
+```
+
+**Why:**
+- Users don't see maintenance tooling
+- Clear separation of concerns
+- Can expand .github/ without cluttering
+- Professional repository hygiene
+
+### Naming Conventions
+
+**Pattern:** Names should reveal purpose immediately.
+
+**Good Names:**
+- TROUBLESHOOTING.md (not SESSION_LEARNINGS.md)
+- REFERENCE_IMPLEMENTATION_HISTORY.md (not CHANGELOG.md)
+- BUILD_PATTERNS.md (not BUILD_GUIDE.md)
+- CONTRIBUTING.md (not AGENTS.md + CLAUDE.md)
+
+**Why:**
+- No guessing what file contains
+- Search-friendly
+- Self-documenting
+- Industry standard conventions
