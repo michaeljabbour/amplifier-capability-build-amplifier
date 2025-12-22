@@ -11,7 +11,29 @@ metadata:
 
 # Building CLI Applications on Amplifier
 
+[Amplifier](https://github.com/microsoft/amplifier) is Microsoft's composable AI agent framework that enables:
+- **Bundle composition** - Mix session orchestrators, hooks, tools, and providers
+- **Module ecosystem** - 36+ modules available ([Module Catalog](https://github.com/microsoft/amplifier/blob/main/docs/MODULES.md))
+- **Provider flexibility** - Claude, GPT, Gemini, local models, and more
+- **Production-ready** - Logging, observability, and hooks built-in
+
 This skill teaches how to build CLI applications using **amplifier-foundation** patterns - the source of truth for Amplifier application development.
+
+## Reference Implementation
+
+**See [amplifier-simplecli](https://github.com/michaeljabbour/amplifier-simplecli)** for a complete working example demonstrating these patterns in production. This terminal UI implementation showcases:
+- Full bundle composition workflow
+- Memory system integration (tool-memory, hooks-memory-capture, context-memory)
+- 14 pre-configured modules
+- Streaming UI with hooks-event-broadcast
+- Complete documentation structure
+
+**Key Resources:**
+- 📊 [ARCHITECTURE_FLOWS.md](https://github.com/michaeljabbour/amplifier-simplecli/blob/main/docs/ARCHITECTURE_FLOWS.md) - Visual diagrams showing Foundation (setup) → Core (runtime) separation
+- 🗺️ [ROADMAP.md](https://github.com/michaeljabbour/amplifier-simplecli/blob/main/docs/ROADMAP.md) - Feature roadmap with implementation details
+- 🔧 [MODULE_GAP_ANALYSIS.md](https://github.com/michaeljabbour/amplifier-simplecli/blob/main/docs/MODULE_GAP_ANALYSIS.md) - Module coverage and requirements
+
+Use it as a reference when building your own CLI applications.
 
 ## Core Workflow
 
@@ -85,7 +107,7 @@ Bundle → compose() → prepare() → create_session() → execute()
 | `session` | Orchestrator and context manager |
 | `providers` | LLM backends |
 | `tools` | Agent capabilities |
-| `hooks` | Observability and control |
+| `hooks` | Observability and control (see [references/HOOKS.md](references/HOOKS.md)) |
 | `agents` | Named agent configurations |
 | `context` | Context files to include |
 | `instruction` | System instruction (markdown body) |
@@ -368,6 +390,55 @@ How it works:
 2. PreparedBundle resolves `@namespace:path` references
 3. Content is loaded and included inline
 
+## Memory System (Custom Extension)
+
+**⚠️ Note:** The memory system is a custom community extension, NOT part of official amplifier-foundation.
+
+Amplifier can be extended with persistent memory capabilities using three custom modules:
+
+| Module | Purpose |
+|--------|---------|
+| **tool-memory** | SQLite storage with full-text search (FTS5) |
+| **hooks-memory-capture** | Automatic observation capture from tool outputs |
+| **context-memory** | Progressive disclosure context injection at session start |
+
+### What Memory Enables
+
+- **Persistent observations** across sessions (bugfix, feature, discovery, decision)
+- **Session tracking** with structured summaries and next_steps
+- **Automatic learning capture** from tool outputs (no manual add_memory calls)
+- **Full-text search** across all memory content
+- **Progressive disclosure** for cost-effective context injection
+
+### Quick Setup
+
+Add to your bundle:
+
+```yaml
+session:
+  memory_context:
+    module: context-memory
+    source: git+https://github.com/michaeljabbour/amplifier-module-context-memory@main
+
+hooks:
+  - module: hooks-memory-capture
+    source: git+https://github.com/michaeljabbour/amplifier-module-hooks-memory-capture@main
+    config:
+      min_content_length: 50
+      auto_summarize_interval: 10
+
+tools:
+  - module: tool-memory
+    source: git+https://github.com/michaeljabbour/amplifier-module-tool-memory@main
+    config:
+      storage_path: ~/.amplifier/memories.db
+      max_memories: 1000
+      enable_fts: true
+      enable_sessions: true
+```
+
+For complete setup, configuration options, and usage patterns, see [references/MEMORY.md](references/MEMORY.md).
+
 ## Philosophy
 
 ### Mechanism, Not Policy
@@ -392,6 +463,28 @@ Foundation (mechanism):          App (policy):
 
 Small bundles compose into larger configurations. Prefer composition over complexity.
 
+## Deep Dive References
+
+For detailed information on specific topics, see the `references/` directory:
+
+### Architecture & Core Concepts
+- **[ARCHITECTURE.md](references/ARCHITECTURE.md)** - Foundation architecture patterns and philosophy
+- **[HOOKS.md](references/HOOKS.md)** - Complete hooks system documentation
+
+### Building Applications
+- **[BUILD_PATTERNS.md](references/BUILD_PATTERNS.md)** - Comprehensive CLI build patterns and implementation details
+
+### Extensions & Customization
+- **[MEMORY.md](references/MEMORY.md)** - Custom memory system extension guide (community contribution)
+- **[CUSTOM_EXTENSIONS.md](references/CUSTOM_EXTENSIONS.md)** - Information about community extensions
+
+### Project Resources
+- **[CONTRIBUTING.md](references/CONTRIBUTING.md)** - Repository structure and contribution guidelines
+- **[SESSION_LEARNINGS.md](references/SESSION_LEARNINGS.md)** - Production bug fixes and learnings
+- **[CHANGELOG.md](references/CHANGELOG.md)** - Project development history
+
+These references provide comprehensive coverage beyond the quick start patterns in this document. Start here for overview, explore references for depth.
+
 ## Reference: amplifier-app-cli
 
 The `amplifier-app-cli` repository is a reference implementation. Learn from it, but understand it implements **app-layer policy** on top of foundation mechanisms:
@@ -404,6 +497,91 @@ The `amplifier-app-cli` repository is a reference implementation. Learn from it,
 | CLI commands | Direct API usage |
 
 When building your own CLI, start from the foundation patterns above, not from copying amplifier-app-cli internals.
+
+## Production Configuration Choices
+
+When building production CLIs, leverage **amplifier-foundation's native capabilities**. The example bundles in `assets/` demonstrate production-ready choices.
+
+### Orchestrator: loop-streaming
+
+**Why loop-streaming over loop-events:**
+
+```yaml
+session:
+  orchestrator:
+    module: loop-streaming
+    config:
+      extended_thinking: true
+      max_iterations: 25
+```
+
+**Key benefits:**
+- **Parallel tool execution** via `asyncio.gather()` prevents race conditions
+- Tool results are guaranteed complete before being added to context
+- Streaming support for better user experience
+- Production-tested in amplifier-app-cli
+
+**Foundation provides:**
+- `loop-basic` - Sequential execution (simple, deterministic)
+- `loop-events` - Event-driven with hooks (vulnerable to race conditions)
+- `loop-streaming` - Parallel execution with determinism (production choice)
+
+### Context Manager: context-simple
+
+**Why context-simple over context-persistent:**
+
+```yaml
+session:
+  context:
+    module: context-simple
+    config:
+      max_tokens: 200000
+      compact_threshold: 0.8
+      auto_compact: true
+```
+
+**Key benefits:**
+- In-memory context management (fast startup)
+- Automatic compaction when approaching token limits
+- Same compaction logic as context-persistent
+- Perfect for stateless CLI sessions
+
+**Foundation provides:**
+- `context-simple` - In-memory with auto-compaction (CLI default)
+- `context-persistent` - File-based memory loading (for long-term memory)
+- `context-memory` - Advanced memory patterns
+
+**When to use persistent:** If your CLI needs to load previous conversation history at startup (rare for CLI tools).
+
+### Safety Hooks from Foundation Ecosystem
+
+The example bundle includes production safety hooks from amplifier-foundation:
+
+```yaml
+hooks:
+  # Approval for dangerous operations
+  - module: hooks-approval
+    source: git+https://github.com/microsoft/amplifier-module-hooks-approval@main
+    config:
+      auto_approve: false
+      dangerous_patterns: ["rm -rf", "sudo", "DROP TABLE", ...]
+
+  # Automatic file backups
+  - module: hooks-backup
+    source: git+https://github.com/microsoft/amplifier-module-hooks-backup@main
+
+  # Git and datetime awareness
+  - module: hooks-status-context
+    source: git+https://github.com/microsoft/amplifier-module-hooks-status-context@main
+    config:
+      include_datetime: true
+      include_git_status: true
+
+```
+
+**Note:** Cost tracking hooks are not currently available in amplifier-foundation. Monitor token usage through the hooks-streaming-ui module's token display feature.
+
+**Validation:** amplifier-app-cli uses the same foundation modules, proving production viability.
 
 ## Common Development Tasks
 
@@ -484,6 +662,8 @@ except BundleValidationError as e:
 ```
 
 ## Building a Complete CLI Application
+
+> **Detailed guide available:** For comprehensive build patterns, implementation details, and best practices, see [references/BUILD_PATTERNS.md](references/BUILD_PATTERNS.md).
 
 This section demonstrates how to build a full-featured CLI using foundation patterns. Following these patterns results in significantly less code (~85% reduction) compared to implementing session management, bundle loading, and configuration merging yourself.
 
@@ -827,8 +1007,6 @@ The app layer is truly thin (typically ~1,500 LOC) - just CLI commands, config s
 ## File Reference
 
 See [references/ARCHITECTURE.md](references/ARCHITECTURE.md) for foundation architecture.
-
-See [references/REFACTORING.md](references/REFACTORING.md) for amplifier-app-cli analysis (reference only).
 
 ## External Documentation
 
