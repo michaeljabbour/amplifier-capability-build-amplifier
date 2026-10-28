@@ -177,6 +177,58 @@
     "docs/upstream-suite-manifest.json",
     "docs/evaluations/2026-10-28/upstream-merge.json"
   ],
-  "evidence_summary": "This local candidate preserves the original source and evaluation assets. Packaging and native software checks are recorded separately from comparative usefulness. No outside-user outcome or renamed-method effectiveness claim is established.",
-  "publication_status": "Installation and evidence scopes are documented below."
+  "evidence_summary": "The six-topic reference mirror, isolated helper regressions and complete portable installation are checked. These checks establish retained content and software behavior; a new extension still needs validation in its actual host.",
+  "publication_status": "Installation and evidence scopes are documented below.",
+  "marketing": {
+    "headline": "Add the capability. Keep the architecture clear.",
+    "lead": "A working guide for people extending Amplifier. Find the right home for a feature, build one useful slice, and check that it behaves correctly inside the host you actually use.",
+    "benefits": [
+      {
+        "title": "Choose the right seam",
+        "body": "Separate application interaction, reusable bundle wiring, callable tools, hooks and providers before adding code."
+      },
+      {
+        "title": "Keep the useful context",
+        "body": "Six substantial reference topics cover Core, Foundation, module authoring, application integration, routing and work across repositories."
+      },
+      {
+        "title": "Hand over a working slice",
+        "body": "Make inputs, errors, cancellation and cleanup explicit, with commands someone else can repeat."
+      }
+    ],
+    "walkthrough": [
+      {
+        "title": "Inspect the host",
+        "detail": "Read its manifests, installed contracts and a neighboring implementation. Record what version the advice applies to."
+      },
+      {
+        "title": "Build the smallest slice",
+        "detail": "Agree the observable behavior and ownership, then implement through the seam that already owns it."
+      },
+      {
+        "title": "Prove and hand over",
+        "detail": "Check registration, success, invalid input, cancellation and cleanup; record installation and rollback."
+      }
+    ],
+    "use_when": [
+      "You need to add a tool, hook, provider or bundle.",
+      "A client feature is starting to duplicate the execution engine.",
+      "A change spans Core, Foundation and an application."
+    ],
+    "not_for": [
+      "A replacement Amplifier runtime or a new provider configuration.",
+      "Blindly copying historical API signatures into a different installed version."
+    ],
+    "quickstart_prompt": "Use Build with Amplifier to inspect this repository. I want a progress panel for a long-running tool. Decide where the feature belongs, identify the actual event contract, and propose one slice with cancellation and cleanup checks.",
+    "output_preview": "Fictional slice: import progress\nUI owns: display and user cancellation\nCore owns: tool execution\nContract: current host event schema, inspected revision recorded\nChecks: success, error, cancel, listener cleanup\nOpen evidence: real-host run pending",
+    "proof_summary": "The six-topic reference mirror, isolated helper regressions and complete portable installation are checked. These checks establish retained content and software behavior; a new extension still needs validation in its actual host.",
+    "next_step": "Bring one feature request and the repository where it should work.",
+    "example_note": "Fictional worked example. It illustrates the intended output; it is not a measured result or a real customer story.",
+    "install_notes": [
+      "Requires Git and Python 3.11+ for the repository installer. The portable method itself can be read by a compatible agent without a service or provider account.",
+      "The destination is a skills-parent folder. Use the discovery path supported by your agent; ~/.agents/skills is an example, not a universal host setting.",
+      "Keep the complete installed folder, references and license together. Identical reinstall is safe; conflicts are refused. A deliberate --replace keeps a dated backup."
+    ]
+  },
+  "repository_url": "https://github.com/michaeljabbour/amplifier-skill-build-amplifier"
 }
