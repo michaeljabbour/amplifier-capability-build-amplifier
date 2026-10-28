@@ -1,0 +1,50 @@
+[
+  {
+    "source_commit": "4beb46c0937ec9806960b5425be9ccd3ddc47533",
+    "source_path": "amplifier-skill/SKILL.md",
+    "destination": "skills/build-amplifier/references/upstream-suite/amplifier-skill/METHOD.md",
+    "source_sha256": "121c6427b84911a48a006cc956db0030c7d4147b438eaaf0ef34d4e4918eeff6",
+    "output_sha256": "18c7a2bd348e0e4a62967478d42fe411b78631048ff9215b5e9c8d09979957a2",
+    "preservation": "Entire original topic body preserved byte-for-byte after a generated authority/version notice."
+  },
+  {
+    "source_commit": "4beb46c0937ec9806960b5425be9ccd3ddc47533",
+    "source_path": "amplifier-core-concepts/SKILL.md",
+    "destination": "skills/build-amplifier/references/upstream-suite/amplifier-core-concepts/METHOD.md",
+    "source_sha256": "bad87a3c7c24836daaf574ad7f374e74cd171770f0163dde968b3cd3989b437f",
+    "output_sha256": "262cfa9c198c8d847fb46b64124a42d9c1869375c70c98d499e63ee726439326",
+    "preservation": "Entire original topic body preserved byte-for-byte after a generated authority/version notice."
+  },
+  {
+    "source_commit": "4beb46c0937ec9806960b5425be9ccd3ddc47533",
+    "source_path": "amplifier-module-and-bundle-development/SKILL.md",
+    "destination": "skills/build-amplifier/references/upstream-suite/amplifier-module-and-bundle-development/METHOD.md",
+    "source_sha256": "c88fb5003d0a2f45543c5e896c525096cc73e537bf31d16e2622e34cdf6d30c6",
+    "output_sha256": "6fbb262a2f75d18fabe0931d1d640cdcacc6ce6f4aad1f25149f0134163a1c77",
+    "preservation": "Entire original topic body preserved byte-for-byte after a generated authority/version notice."
+  },
+  {
+    "source_commit": "4beb46c0937ec9806960b5425be9ccd3ddc47533",
+    "source_path": "amplifier-foundation-reference/SKILL.md",
+    "destination": "skills/build-amplifier/references/upstream-suite/amplifier-foundation-reference/METHOD.md",
+    "source_sha256": "4f0d892fbc627d367dd7e7f37a9cc38e4a23e1814961955e9aa6b0ba5ca633f0",
+    "output_sha256": "559f2e33b67dea20fd166afcf706ebdce37ed0f2363efe3e64aa42c103f216c2",
+    "preservation": "Entire original topic body preserved byte-for-byte after a generated authority/version notice."
+  },
+  {
+    "source_commit": "4beb46c0937ec9806960b5425be9ccd3ddc47533",
+    "source_path": "amplifier-app-integration/SKILL.md",
+    "destination": "skills/build-amplifier/references/upstream-suite/amplifier-app-integration/METHOD.md",
+    "source_sha256": "d96e01e5fd8866776aa4c465ab5ffaf6bda0fb4320d301e26648c993dfb14608",
+    "output_sha256": "b258b0c2f5ff8e80a14ebff59674a1cf9e4145c44790f447005a2588ed269a69",
+    "preservation": "Entire original topic body preserved byte-for-byte after a generated authority/version notice."
+  },
+  {
+    "source_commit": "4beb46c0937ec9806960b5425be9ccd3ddc47533",
+    "source_path": "amplifier-cross-repo-workflows/SKILL.md",
+    "destination": "skills/build-amplifier/references/upstream-suite/amplifier-cross-repo-workflows/METHOD.md",
+    "source_sha256": "c52a5f5e3f32329d7b3a7dc01104ad3a05021a3476ae3ac68b4ed3c393ad19a1",
+    "output_sha256": "b52fbb7fcce901d3d54419374540eb618b958d47674b4e7ee01e92c413ba1fec",
+    "preservation": "Entire original topic body preserved byte-for-byte after a generated authority/version notice."
+  }
+]

@@ -21,6 +21,8 @@ Keep the complete `skills/build-amplifier` folder together. Installation copies 
 
 ## What was consolidated
 
+The current public source branch (`4beb46c…`) was merged normally into this candidate after the first local extraction. All six topics remain substantial, independently loadable references: [router](skills/build-amplifier/references/upstream-suite/amplifier-skill/METHOD.md), [Core concepts](skills/build-amplifier/references/upstream-suite/amplifier-core-concepts/METHOD.md), [module/bundle authoring](skills/build-amplifier/references/upstream-suite/amplifier-module-and-bundle-development/METHOD.md), [Foundation examples](skills/build-amplifier/references/upstream-suite/amplifier-foundation-reference/METHOD.md), [app integration](skills/build-amplifier/references/upstream-suite/amplifier-app-integration/METHOD.md), and [cross-repo workflow](skills/build-amplifier/references/upstream-suite/amplifier-cross-repo-workflows/METHOD.md). A generated source/output hash check prevents guide loss. [Current contract caveats](skills/build-amplifier/references/current-contracts.md) identify historical API/lifecycle claims that need installed-host verification.
+
 [Migration map](docs/MIGRATION.md) records the original source paths and current roles. Primary Git history, native engines, tests, examples, and evaluation assets remain in this checkout. [Native guide](docs/NATIVE-README.md) preserves the original project documentation; old install URLs and runtime claims there are historical and need current verification. [Validation](docs/VALIDATION.md) records actual checks and limits.
 
 ## Build the local site

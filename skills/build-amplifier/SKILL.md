@@ -23,6 +23,17 @@ Inspect the actual host's manifests, source, extension protocol, and tests. Reco
 
 ## Choose the reference deliberately
 
+[Current contract caveats](references/current-contracts.md) distinguish preserved source examples from verified installed APIs. The six substantial topics from the current public suite remain available behind this one entry:
+
+| Need | Preserved topic |
+|---|---|
+| Classify repo, layer, intent and delegation | [Ecosystem router](references/upstream-suite/amplifier-skill/METHOD.md) |
+| Kernel, module types, hooks and session concepts | [Core concepts](references/upstream-suite/amplifier-core-concepts/METHOD.md) |
+| Author a module or compose a capability | [Module and bundle development](references/upstream-suite/amplifier-module-and-bundle-development/METHOD.md) |
+| Navigate Foundation patterns and examples | [Foundation reference](references/upstream-suite/amplifier-foundation-reference/METHOD.md) |
+| Embed runtime behind an application boundary | [Application integration](references/upstream-suite/amplifier-app-integration/METHOD.md) |
+| Order changes and validate across repos | [Cross-repo workflows](references/upstream-suite/amplifier-cross-repo-workflows/METHOD.md) |
+
 [CLI and Foundation patterns](references/cli/METHOD.md) retain the original substantial authoring guide and its architecture, hooks, build, and troubleshooting references. Those examples are historical patterns, not verified current SDK signatures. [Runtime delegation](references/delegation/METHOD.md) preserves the separate explicit-intent workflow. Optional helper scripts are installed in `scripts/`; use `sh scripts/list_agents.sh --help` or `sh scripts/session_context.sh --help` from the installed skill folder. Cached agent/session listings are dated evidence and can be stale. Do not print private transcripts or credentials.
 
 For delegation, first inspect `amplifier --help` and provider/bundle state. Run only the task the user asked to delegate; report start/completion/error evidence separately. There is no requirement to delegate a local edit simply because this skill is installed.

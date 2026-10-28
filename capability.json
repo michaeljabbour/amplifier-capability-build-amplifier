@@ -48,6 +48,13 @@
   ],
   "verification": [
     {
+      "name": "Current public six-topic reconciliation",
+      "command": "python3 scripts/sync_upstream_suite.py --check; sh scripts/validate_suite.sh; sh tests/test_list_agents.sh; sh tests/test_session_context.sh; python3 -m unittest discover -s tests -v",
+      "expected": "All six original topic bodies retained with source/output hashes, canonical entry links, current-contract caveats and isolated helper behavior.",
+      "status": "passed",
+      "evidence": "Normal merge retains public4beb46c and previous/secondary ancestry. All six full source topics match generated source/output hashes;8 list-agent shell checks,11 session shell checks and2 discovery tests pass.31 portable files install byte-identically and reinstall idempotently. No provider/runtime activation or efficacy claim."
+    },
+    {
       "name": "Isolated discovery regressions",
       "command": "python3 -m unittest discover -s tests -v",
       "status": "passed",
@@ -72,12 +79,29 @@
   "sources": [
     {
       "repo": "amplifier-skill",
+      "commit": "4beb46c0937ec9806960b5425be9ccd3ddc47533",
+      "paths": [
+        "amplifier-skill",
+        "amplifier-core-concepts",
+        "amplifier-module-and-bundle-development",
+        "amplifier-foundation-reference",
+        "amplifier-app-integration",
+        "amplifier-cross-repo-workflows",
+        "scripts/validate_suite.sh",
+        "tests/test_list_agents.sh",
+        "tests/test_session_context.sh"
+      ],
+      "license": "No explicit LICENSE at this upstream commit; owner-authored source preserved under the owner consolidation request. Target LICENSE retained.",
+      "role": "Current public main merged normally; all six substantial topics, assets, native helper checks and history retained behind one portable entry."
+    },
+    {
+      "repo": "amplifier-skill",
       "commit": "81dc45815b65ec9c2dcef7c89750acba5fb72119",
       "paths": [
         "SKILL.md"
       ],
       "license": "MIT License",
-      "role": "Primary history and engine retained; methods consolidated behind the canonical portable entry."
+      "role": "Earlier local extraction base retained in history and delegation reference; reconciled with current public source before publication."
     },
     {
       "repo": "amplifier-cli-skill",
@@ -148,7 +172,10 @@
     "docs/MIGRATION.md",
     "docs/VALIDATION.md",
     "docs/NATIVE-README.md",
-    "docs/evaluations/2026-10-28/consolidation.json"
+    "docs/evaluations/2026-10-28/consolidation.json",
+    "docs/UPSTREAM-SUITE.md",
+    "docs/upstream-suite-manifest.json",
+    "docs/evaluations/2026-10-28/upstream-merge.json"
   ],
   "evidence_summary": "This local candidate preserves the original source and evaluation assets. Packaging and native software checks are recorded separately from comparative usefulness. No outside-user outcome or renamed-method effectiveness claim is established.",
   "publication_status": "Local release candidate. Source repositories and public URLs have not been changed."
