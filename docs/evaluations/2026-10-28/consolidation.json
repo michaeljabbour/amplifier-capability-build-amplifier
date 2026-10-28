@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-28",
+  "status": "local conformance and native software checks",
+  "capability": "build-amplifier",
+  "primary_source_commit": "81dc45815b65ec9c2dcef7c89750acba5fb72119",
+  "sources": [
+    {
+      "repo": "amplifier-skill",
+      "commit": "81dc45815b65ec9c2dcef7c89750acba5fb72119",
+      "paths": [
+        "SKILL.md"
+      ],
+      "license": "MIT License",
+      "role": "Primary history and engine retained; methods consolidated behind the canonical portable entry."
+    },
+    {
+      "repo": "amplifier-cli-skill",
+      "commit": "6904eca0980767cff8d3c70033839f6c1535dffc",
+      "paths": [
+        "LICENSE",
+        "skills/amplifier-cli-skill/SKILL.md",
+        "skills/amplifier-cli-skill/references/ARCHITECTURE.md",
+        "skills/amplifier-cli-skill/references/ARCHITECTURE_FLOWS.md",
+        "skills/amplifier-cli-skill/references/BUILD_PATTERNS.md",
+        "skills/amplifier-cli-skill/references/CONTRIBUTING.md",
+        "skills/amplifier-cli-skill/references/CUSTOM_EXTENSIONS.md",
+        "skills/amplifier-cli-skill/references/EXAMPLES.md",
+        "skills/amplifier-cli-skill/references/HOOKS.md",
+        "skills/amplifier-cli-skill/references/MEMORY.md",
+        "skills/amplifier-cli-skill/references/README.md",
+        "skills/amplifier-cli-skill/references/REFERENCE_IMPLEMENTATION_HISTORY.md",
+        "skills/amplifier-cli-skill/references/TROUBLESHOOTING.md"
+      ],
+      "license": "MIT License",
+      "role": "Secondary method/reference consolidation. Original source identity and history retained."
+    },
+    {
+      "repo": "amplifier-skill-codex",
+      "commit": "8559d311e635c3d2f85b51862ce43575a5014a61",
+      "paths": [
+        "SKILL.md"
+      ],
+      "license": "No explicit LICENSE at source commit; author-owned source preserved with permission of owner request.",
+      "role": "Secondary method/reference consolidation. Original source identity and history retained."
+    }
+  ],
+  "checks": [
+    {
+      "name": "Isolated discovery regressions",
+      "command": "python3 -m unittest discover -s tests -v",
+      "status": "passed",
+      "evidence": "2 tests; opaque cache-folder bundle filtering and invalid limit handling; stub runtime and dedicated AMPLIFIER_HOME. No personal state or provider used.",
+      "expected": "The stated scope passes; no broader result inferred."
+    },
+    {
+      "name": "Portable packaging and install",
+      "command": "python3 scripts/capability.py build; python3 scripts/capability.py check; python3 scripts/capability.py doctor; python3 scripts/capability.py install --dest <temporary-parent> (twice)",
+      "status": "passed",
+      "expected": "Byte-identical canonical ZIP and isolated idempotent install.",
+      "evidence": "All operations passed. No runtime activation or effectiveness measured."
+    },
+    {
+      "name": "Skill discovery metadata",
+      "command": "<yaml-enabled-python> /path/to/skill-creator/scripts/quick_validate.py skills/build-amplifier",
+      "status": "passed",
+      "expected": "Valid required frontmatter, naming, and complete scaffold.",
+      "evidence": "Skill is valid. This is a structural check, not a behavioral benchmark."
+    }
+  ],
+  "limitations": [
+    "No new paid live inference, production activation, publication, or outside-user acceptance.",
+    "Fictional examples are authored illustrations, not observed outcomes.",
+    "Retained historical evaluation assets keep their original scope; renamed portable-method effectiveness is unmeasured."
+  ],
+  "changes": "Consolidated authoring/delegation; discovery filter repair and dedicated runtime data-root support."
+}

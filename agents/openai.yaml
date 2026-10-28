@@ -1,4 +1,4 @@
 interface:
-  display_name: "Amplifier Skill"
-  short_description: "Delegate complex work via Amplifier safely"
-  default_prompt: "Use $amplifier-skill to delegate this task to Amplifier, then summarize findings and next actions."
+  display_name: "Build with Amplifier"
+  short_description: "Choose the extension seam and prove the native slice"
+  default_prompt: "Use $build-amplifier to inspect the host contracts and implement a bounded extension."

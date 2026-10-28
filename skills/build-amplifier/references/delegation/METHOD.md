@@ -1,3 +1,5 @@
+> Preserved source method from `amplifier-skill` at `81dc45815b65ec9c2dcef7c89750acba5fb72119`. Original examples and runtime claims are historical; the canonical entry point defines current scope.
+
 ---
 name: amplifier-skill
 description: Delegate complex work to Microsoft Amplifier from coding assistants. Use when users explicitly ask to use Amplifier, delegate to Amplifier, inspect Amplifier history/context, or discover Amplifier agents and bundles. Prefer conservative delegation and use CLI-first discovery with filesystem fallbacks in restricted environments.

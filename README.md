@@ -1,92 +1,33 @@
-# Amplifier Skill
+# Build with Amplifier
 
-Delegate complex work to [Microsoft Amplifier](https://github.com/microsoft/amplifier)
-from coding assistants while keeping local/simple tasks local.
+Build the extension in the right place, against the current contracts.
 
-## What Changed in V2
+People building Amplifier applications, bundles, tools, hooks, and providers. Use when adding an Amplifier capability, composing a client, or debugging the boundary between Foundation and Core.
 
-- Explicit-intent delegation policy: delegate only when users explicitly ask for Amplifier.
-- Runtime-first discovery: avoid hardcoded bundle/agent lists.
-- Sandbox-safe behavior: filesystem fallbacks for sessions and agent discovery.
-- Skill metadata support: `agents/openai.yaml` included for product UIs.
+## Install the portable method
 
-## Quick Start
-
-### 1. Install Amplifier
-
-```bash
-uv tool install git+https://github.com/microsoft/amplifier
-amplifier init
+```sh
+python3 scripts/capability.py doctor
+python3 scripts/capability.py install --dest ~/.agents/skills
 ```
 
-### 2. Install This Skill
+Keep the complete `skills/build-amplifier` folder together. Installation copies only that method, references, and license; it starts no service and installs no runtime. Use a different skills-parent path for your host.
 
-**Claude Code:**
+## Choose the mode
 
-```bash
-claude skill add https://github.com/michaeljabbour/amplifier-skill-codex/blob/main/SKILL.md
+- **Place** — A request could become configuration, bundle, tool, hook, provider, or app code. A seam decision with inspected contracts and a smallest working slice.
+- **Build** — The host and extension seam are known. A native implementation with cleanup, failure behavior, and contract checks.
+- **Delegate** — The user explicitly asks to run work through Amplifier. A bounded runtime request and an attributed result; never implicit delegation.
+
+## What was consolidated
+
+[Migration map](docs/MIGRATION.md) records the original source paths and current roles. Primary Git history, native engines, tests, examples, and evaluation assets remain in this checkout. [Native guide](docs/NATIVE-README.md) preserves the original project documentation; old install URLs and runtime claims there are historical and need current verification. [Validation](docs/VALIDATION.md) records actual checks and limits.
+
+## Build the local site
+
+```sh
+python3 scripts/capability.py build
+python3 scripts/capability.py check
 ```
 
-**Warp (or manual install):**
-
-```bash
-mkdir -p ~/.claude/skills/amplifier
-curl -o ~/.claude/skills/amplifier/SKILL.md \
-  https://raw.githubusercontent.com/michaeljabbour/amplifier-skill-codex/main/SKILL.md
-```
-
-**Other tools:** copy `SKILL.md` into the tool's skills/commands directory.
-
-## Core Behavior
-
-- Delegate only when users explicitly request Amplifier usage.
-- Prefer local execution for quick edits, simple shell operations, and obvious fixes.
-- Query Amplifier history/context via script or runtime commands.
-- Discover agents dynamically at runtime or from local cache fallback.
-
-## Helper Scripts
-
-### Session context lookup
-
-```bash
-./scripts/session_context.sh --project "$PWD" --limit 10
-./scripts/session_context.sh --all-projects --limit 10
-```
-
-### Agent discovery
-
-```bash
-./scripts/list_agents.sh
-./scripts/list_agents.sh --bundle foundation
-```
-
-## Validation
-
-Run the skill validator:
-
-```bash
-python3 ~/.codex/skills/.system/skill-creator/scripts/quick_validate.py .
-```
-
-## Documentation
-
-- [Quick Reference](docs/amplifier.md)
-- [Agent Discovery Guide](resources/agent-catalog.md)
-- [Official Amplifier Docs](https://github.com/microsoft/amplifier)
-
-## Repository Layout
-
-```text
-.
-├── SKILL.md
-├── README.md
-├── agents/
-│   └── openai.yaml
-├── docs/
-│   └── amplifier.md
-├── resources/
-│   └── agent-catalog.md
-└── scripts/
-    ├── list_agents.sh
-    └── session_context.sh
-```
+Open `_site/index.html` or serve `_site` with a local static server. The downloadable ZIP is built from canonical method bytes. The fictional before/after example illustrates intended judgment; it is not a measured improvement. Nothing has been published or renamed remotely.

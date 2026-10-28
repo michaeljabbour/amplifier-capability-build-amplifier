@@ -114,7 +114,7 @@ try_amplifier_cli() {
 }
 
 collect_fallback_candidates() {
-  projects_root="${HOME}/.amplifier/projects"
+  projects_root="${AMPLIFIER_HOME:-${HOME}/.amplifier}/projects"
   [ -d "$projects_root" ] || return 0
 
   if [ "$mode" = 'all' ]; then

@@ -2,3 +2,9 @@
 *.pyc
 __pycache__/
 .venv/
+
+# Capability build and local verification
+_site/
+.venv-capability/
+.capability-check/
+__pycache__/

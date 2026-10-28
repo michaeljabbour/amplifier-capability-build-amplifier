@@ -104,38 +104,25 @@ run_runtime_discovery() {
 }
 
 run_cache_discovery() {
-  cache_root="${HOME}/.amplifier/cache"
+  cache_root="${AMPLIFIER_HOME:-${HOME}/.amplifier}/cache"
   [ -d "$cache_root" ] || return 1
 
   tmp_files="$(mktemp)"
   trap 'rm -f "$tmp_files"' EXIT HUP INT TERM
 
-  matched='0'
   target_lower="$(printf '%s' "$bundle" | tr '[:upper:]' '[:lower:]')"
-
   for file in "$cache_root"/*/bundle.md; do
     [ -f "$file" ] || continue
     if [ -n "$bundle" ]; then
       dir_lower="$(basename "$(dirname "$file")" | tr '[:upper:]' '[:lower:]')"
+      manifest_name="$(extract_frontmatter <"$file" | awk '/^[[:space:]]*name:/ {sub(/^[[:space:]]*name:[[:space:]]*/, ""); gsub(/[\047\042]/, ""); print; exit}' | tr '[:upper:]' '[:lower:]')"
       case "$dir_lower" in
-        *"$target_lower"*)
-          printf '%s\n' "$file" >>"$tmp_files"
-          matched='1'
-          ;;
+        *"$target_lower"*) ;;
+        *) [ "$manifest_name" = "$target_lower" ] || continue ;;
       esac
-    else
-      printf '%s\n' "$file" >>"$tmp_files"
     fi
+    printf '%s\n' "$file" >>"$tmp_files"
   done
-
-  # If bundle filtering by folder name fails, parse all manifests as a fallback.
-  if [ -n "$bundle" ] && [ "$matched" = '0' ]; then
-    : >"$tmp_files"
-    for file in "$cache_root"/*/bundle.md; do
-      [ -f "$file" ] || continue
-      printf '%s\n' "$file" >>"$tmp_files"
-    done
-  fi
 
   [ -s "$tmp_files" ] || return 1
 
