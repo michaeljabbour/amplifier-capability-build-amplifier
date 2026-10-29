@@ -1,0 +1,11 @@
+Inside your app, one conductor runs the work.
+You want a progress panel in the lobby. Tock volunteers.
+The quick fix copies the conductor out front.
+Two loops now keep time. Cancel stops only the copy.
+Build with Amplifier finds the right seam first, in the host you actually installed.
+The lobby owns the display and the cancel button. Core keeps the conductor.
+So you hang a hook by the podium. The lobby listens, and the work stays in the hall.
+Then you prove the slice: success, bad input, cancel, and cleanup.
+Old examples are history. You check them against what you installed.
+On screen: Find the seam. Then build the slice.
+Build with Amplifier. Add the capability. Keep the architecture clear.

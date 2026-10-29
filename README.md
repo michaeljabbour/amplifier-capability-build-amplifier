@@ -2,6 +2,8 @@
 
 Add the capability. Keep the architecture clear.
 
+Watch the [70-second film](https://michaeljabbour.github.io/amplifier-skill-build-amplifier/#film): a copied conductor that cancel cannot stop, and how the skill finds the right seam before it builds. The example in it is fictional.
+
 A working guide for people extending Amplifier. Find the right home for a feature, build one useful slice, and check that it behaves correctly inside the host you actually use.
 
 [Explore the site](https://michaeljabbour.github.io/amplifier-skill-build-amplifier/) · [Read the method](skills/build-amplifier/SKILL.md) · [Install guide](docs/INSTALL.md)

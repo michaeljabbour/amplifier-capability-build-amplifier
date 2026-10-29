@@ -230,5 +230,12 @@
       "Keep the complete installed folder, references and license together. Identical reinstall is safe; conflicts are refused. A deliberate --replace keeps a dated backup."
     ]
   },
-  "repository_url": "https://github.com/michaeljabbour/amplifier-skill-build-amplifier"
+  "repository_url": "https://github.com/michaeljabbour/amplifier-skill-build-amplifier",
+  "film": {
+    "file": "build-amplifier-film",
+    "seconds": 70,
+    "heading": "Find the seam. Then build the slice.",
+    "blurb": "In 70 seconds, Tock the metronome copies the conductor into the lobby to show progress, so two loops keep time and Cancel stops only the copy. Build with Amplifier finds the right seam in the host you installed, hangs a hook so the lobby only listens, and proves the slice: success, bad input, cancel and cleanup. Captions are on the player; a transcript is below.",
+    "note": "The app and its music importer are a fictional example. The film shows how the skill behaves; it does not report results."
+  }
 }
