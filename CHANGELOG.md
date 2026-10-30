@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-10-30 — Available film formats
+
+- Offer only film formats present in the repository. Preserve producer assets and support WebM-only playback/downloads without broken MP4 links; cover WebM-only, MP4-only, both and missing-media cases.
+
 ## 2026-10-29 — Film
 
 - Add a 70-second film to the site, with captions, a transcript, a poster and a 15-second cut. The example in it is fictional, and it reports no results.

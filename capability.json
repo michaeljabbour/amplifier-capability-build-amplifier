@@ -230,12 +230,97 @@
       "Keep the complete installed folder, references and license together. Identical reinstall is safe; conflicts are refused. A deliberate --replace keeps a dated backup."
     ]
   },
-  "repository_url": "https://github.com/michaeljabbour/amplifier-skill-build-amplifier",
+  "repository_url": "https://github.com/michaeljabbour/amplifier-capability-build-amplifier",
+  "name": "amplifier-capability-build-amplifier",
+  "legacy_names": [
+    "amplifier-skill-build-amplifier",
+    "build-amplifier"
+  ],
+  "contract_version": "amplifier-capability/v1",
+  "version": null,
+  "version_basis": "No release version recorded; installer requires a full Git revision pin.",
+  "engine": "LLM",
+  "engine_components": {
+    "caller_method": "LLM"
+  },
+  "surfaces": [
+    "agent-skills"
+  ],
+  "portable_method": {
+    "name": "build-amplifier",
+    "path": "skills/build-amplifier",
+    "include": [
+      "."
+    ],
+    "contract": "Agent Skills directory; caller applies the method; no independent execution loop is installed."
+  },
+  "interfaces": {
+    "portable": {
+      "input": "Caller task and explicitly authorized context",
+      "output": "Build the extension in the right place, against the current contracts.",
+      "failure": "Report insufficient evidence, unsupported context or host limitation; never turn discovery into an execution claim."
+    },
+    "native": {
+      "distribution": null,
+      "entrypoints": {},
+      "docs": [
+        "docs/INSTALL.md",
+        "docs/MIGRATION.md",
+        "docs/VALIDATION.md",
+        "docs/NATIVE-README.md",
+        "docs/evaluations/2026-10-28/consolidation.json",
+        "docs/UPSTREAM-SUITE.md",
+        "docs/upstream-suite-manifest.json",
+        "docs/evaluations/2026-10-28/upstream-merge.json"
+      ],
+      "status": "Existing declared entrypoints preserved; runtime signatures, service access and installation tests remain separate evidence."
+    },
+    "host_adapters": {
+      "amplifier_bundle": null,
+      "grants_autonomy": false
+    }
+  },
+  "permissions": {
+    "installation": {
+      "network": false,
+      "executes_capability_code": false,
+      "writes": [
+        "Selected discovery folders",
+        ".capability-state transaction backups"
+      ],
+      "grants_runtime_permissions": false
+    },
+    "runtime": {
+      "status": "Host/caller authorizes each operation; installation is not a tool allowlist or standing approval.",
+      "declared_boundaries": [
+        "The portable method needs no Amplifier install. Executing examples or delegation needs a configured runtime.",
+        "Historical API and model examples are reference material; inspect installed versions before copying a signature.",
+        "Memory is an optional extension, never a prerequisite."
+      ]
+    },
+    "secret_names": {
+      "discovery_requires": [],
+      "native_runtime_inventory": "See native documentation; no credentials are bundled or inferred."
+    }
+  },
+  "dataflow": {
+    "installation": "Read pinned tracked portable source and copy locally with SHA-256 receipts. No source text is transmitted.",
+    "method": "Caller supplies authorized context; existing promise and boundaries govern output.",
+    "native_runtime": "Provider/network/storage flows are owned by native interfaces and host authorization; these files do not enable them."
+  },
+  "source_policy": {
+    "revision": "Explicit full40-character Git commit required at installation; never infer latest.",
+    "repository_rename": "Public identity may change; skill folder, imports, entrypoints, tool IDs and schemas remain stable.",
+    "research": ".research/market remains local and ignored; AGENTS governs refresh."
+  },
   "film": {
     "file": "build-amplifier-film",
     "seconds": 70,
     "heading": "Find the seam. Then build the slice.",
     "blurb": "In 70 seconds, Tock the metronome copies the conductor into the lobby to show progress, so two loops keep time and Cancel stops only the copy. Build with Amplifier finds the right seam in the host you installed, hangs a hook so the lobby only listens, and proves the slice: success, bad input, cancel and cleanup. Captions are on the player; a transcript is below.",
     "note": "The app and its music importer are a fictional example. The film shows how the skill behaves; it does not report results."
-  }
+  },
+  "repository_aliases": [
+    "https://github.com/michaeljabbour/amplifier-skill-build-amplifier"
+  ]
 }

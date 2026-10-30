@@ -248,10 +248,10 @@ Pending Steps:
 
 ## References
 
-- [FOUNDATION_AUDIT.md](https://github.com/michaeljabbour/amplifier-cli-skill/blob/6904eca0980767cff8d3c70033839f6c1535dffc//Users/michaeljabbour/dev/amplifier-simplecli/FOUNDATION_AUDIT.md)
-- [SKILL.md](https://github.com/michaeljabbour/amplifier-cli-skill/blob/6904eca0980767cff8d3c70033839f6c1535dffc//Users/michaeljabbour/dev/amplifier-cli-skill/SKILL.md)
-- [HOOKS.md](https://github.com/michaeljabbour/amplifier-cli-skill/blob/6904eca0980767cff8d3c70033839f6c1535dffc//Users/michaeljabbour/dev/amplifier-cli-skill/references/HOOKS.md)
-- [Plan File](https://github.com/michaeljabbour/amplifier-cli-skill/blob/6904eca0980767cff8d3c70033839f6c1535dffc//Users/michaeljabbour/.claude/plans/luminous-whistling-grove.md)
+- [Foundation alignment summary](#foundation-alignment-verification) (the separate historical `FOUNDATION_AUDIT.md` is not included).
+- [CLI method](../METHOD.md#production-configuration-choices) (the vendored form of the historical `SKILL.md`).
+- [HOOKS.md](HOOKS.md)
+- Original planning note: not included in this public reference.
 
 ---
 
