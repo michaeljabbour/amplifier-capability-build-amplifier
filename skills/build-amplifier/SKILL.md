@@ -41,3 +41,7 @@ For delegation, first inspect `amplifier --help` and provider/bundle state. Run 
 ## Completion
 
 Return the seam decision, changed paths, inspected contracts, exact checks, live-versus-fake evidence, remaining blockers, and local install/rollback. Never count a copied API example or packaging check as a working extension.
+
+## Optional coaching checkpoint
+
+Read [the local coaching guide](references/coaching-session.v1.md) only when the person asks for practice or optional session bookkeeping. Keep direct artifact production available; agree a small budget, preserve the baseline and stop on goal, user exit or no meaningful gain.
