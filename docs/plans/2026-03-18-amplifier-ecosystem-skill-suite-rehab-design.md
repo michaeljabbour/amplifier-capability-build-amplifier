@@ -1,3 +1,5 @@
+> Local paths in this document are illustrative placeholders. Replace each with the appropriate absolute path on your machine before following an example.
+
 # Amplifier Ecosystem Skill Suite Rehab Design
 
 ## Goal
@@ -48,13 +50,13 @@ The suite should be organized around **canonical-source awareness**, not around 
 
 ### Canonical source model
 The design must explicitly encode and route around these mandatory canonical sources:
-- `/Users/michaeljabbour/dev/amplifier/docs/MODULES.md`
+- `/absolute/path/to/local-source-01`
 - module development guidance from the Amplifier ecosystem
 - bundle development guidance from Amplifier Foundation
-- `/Users/michaeljabbour/dev/amplifier-foundation/docs/APPLICATION_INTEGRATION_GUIDE.md`
-- `/Users/michaeljabbour/dev/amplifier/docs`
-- `/Users/michaeljabbour/dev/amplifier-foundation/docs`
-- `/Users/michaeljabbour/dev/amplifier-foundation/examples`
+- `/absolute/path/to/local-source-02`
+- `/absolute/path/to/local-source-03`
+- `/absolute/path/to/local-source-04`
+- `/absolute/path/to/local-source-05`
 
 The suite should also explicitly teach cross-repo workflow guidance spanning:
 - `amplifier`
@@ -101,7 +103,7 @@ Responsibilities:
 Mandatory authoring companion.
 
 Responsibilities:
-- distill `/Users/michaeljabbour/dev/amplifier/docs/MODULES.md`
+- distill `/absolute/path/to/local-source-01`
 - distill module development guidance from the Amplifier ecosystem
 - distill bundle development guidance from Amplifier Foundation
 - explain module vs bundle vs agent vs behavior distinctions
@@ -113,9 +115,9 @@ This companion is the canonical home for module and bundle authoring guidance in
 Heavier Foundation-focused reference companion.
 
 Responsibilities:
-- absorb the most important stable material from `/Users/michaeljabbour/dev/amplifier-foundation/docs`
-- absorb the strongest example-driven material from `/Users/michaeljabbour/dev/amplifier-foundation/examples`
-- distill the most important lessons from `/Users/michaeljabbour/dev/amplifier-foundation/docs/APPLICATION_INTEGRATION_GUIDE.md`
+- absorb the most important stable material from `/absolute/path/to/local-source-04`
+- absorb the strongest example-driven material from `/absolute/path/to/local-source-05`
+- distill the most important lessons from `/absolute/path/to/local-source-02`
 - become the main example-driven teaching asset in the suite
 
 ### `amplifier-app-integration`
@@ -186,10 +188,10 @@ The router should be verified against at least these task classes:
 ## Acceptance Criteria
 - A user can start from the router skill and reach the right companion quickly.
 - Mandatory sources are explicitly covered:
-  - `/Users/michaeljabbour/dev/amplifier/docs/MODULES.md`
+  - `/absolute/path/to/local-source-01`
   - module development guidance from the Amplifier ecosystem
   - bundle development guidance from Amplifier Foundation
-  - `/Users/michaeljabbour/dev/amplifier-foundation/docs/APPLICATION_INTEGRATION_GUIDE.md`
+  - `/absolute/path/to/local-source-02`
 - The suite teaches safe cross-repo execution, not just concepts.
 - `amplifier-app-cli` is treated as the end-to-end validation surface.
 - The heavier Foundation/examples companion becomes the main example-driven teaching asset.
