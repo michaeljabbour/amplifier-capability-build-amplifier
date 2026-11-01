@@ -2,11 +2,11 @@
 
 Add the capability. Keep the architecture clear.
 
-Watch the [70-second film](https://michaeljabbour.github.io/amplifier-skill-build-amplifier/#film): a copied conductor that cancel cannot stop, and how the skill finds the right seam before it builds. The example in it is fictional.
+Watch the [70-second film](https://michaeljabbour.github.io/amplifier-capability-build-amplifier/#film): a copied conductor that cancel cannot stop, and how the skill finds the right seam before it builds. The example in it is fictional.
 
 A working guide for people extending Amplifier. Find the right home for a feature, build one useful slice, and check that it behaves correctly inside the host you actually use.
 
-[Explore the site](https://michaeljabbour.github.io/amplifier-skill-build-amplifier/) · [Read the method](skills/build-amplifier/SKILL.md) · [Install guide](docs/INSTALL.md)
+[Explore the site](https://michaeljabbour.github.io/amplifier-capability-build-amplifier/) · [Read the method](skills/build-amplifier/SKILL.md) · [Install guide](docs/INSTALL.md)
 
 ## What you get
 
@@ -19,8 +19,8 @@ A working guide for people extending Amplifier. Find the right home for a featur
 Requires Git and Python 3.11+. Run these commands from a terminal:
 
 ```sh
-git clone https://github.com/michaeljabbour/amplifier-skill-build-amplifier.git
-cd amplifier-skill-build-amplifier
+git clone https://github.com/michaeljabbour/amplifier-capability-build-amplifier.git
+cd amplifier-capability-build-amplifier
 python3 scripts/capability.py doctor
 python3 scripts/capability.py install --dest ~/.agents/skills
 ```

@@ -5,8 +5,8 @@
 Requires Git and Python 3.11+. From a terminal:
 
 ```sh
-git clone https://github.com/michaeljabbour/amplifier-skill-build-amplifier.git
-cd amplifier-skill-build-amplifier
+git clone https://github.com/michaeljabbour/amplifier-capability-build-amplifier.git
+cd amplifier-capability-build-amplifier
 python3 scripts/capability.py doctor
 python3 scripts/capability.py install --dest ~/.agents/skills
 ```
