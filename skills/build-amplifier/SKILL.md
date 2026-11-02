@@ -40,6 +40,13 @@ For delegation, first inspect `amplifier --help` and provider/bundle state. Run 
 
 ## Completion
 
+For an optional first Core-only contract exercise, run
+`python3 examples/minimal_tool_contract.py` from this installed skill folder in
+an existing Core environment. The [fictional fixture](examples/minimal_tool_contract.py)
+checks native coordinator mount/get, success, invalid input, cancellation and
+registered cleanup, reporting the installed Core version. It installs nothing,
+calls no provider, and does not replace the actual application's integration test.
+
 Return the seam decision, changed paths, inspected contracts, exact checks, live-versus-fake evidence, remaining blockers, and local install/rollback. Never count a copied API example or packaging check as a working extension.
 
 ## Optional coaching checkpoint

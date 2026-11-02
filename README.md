@@ -54,6 +54,19 @@ Open evidence: real-host run pending
 
 ## What is checked
 
+For a first native contract check, run the packaged fictional fixture in an
+existing Amplifier Core environment:
+
+```sh
+python3 skills/build-amplifier/examples/minimal_tool_contract.py
+```
+
+It records the installed Core version and exercises the actual coordinator's
+tool mount/get and registered cleanup around success, invalid input and
+cancellation. It installs nothing and calls no provider. This is a Core-only
+example; a real extension still needs its selected application's integration,
+event and end-to-end task checks. Missing Core is a setup gap, not a passed test.
+
 The six-topic reference mirror, isolated helper regressions and complete portable installation are checked. These checks establish retained content and software behavior; a new extension still needs validation in its actual host. See [validation](docs/VALIDATION.md) for the exact checks and limits.
 
 ## Retained implementation and references
